@@ -16,7 +16,7 @@ class HttpClient {
   }
 
   patch<T>(url: string, data: T) {
-    return this.httpClient.post(url, data);
+    return this.httpClient.patch(url, data);
   }
 }
 
