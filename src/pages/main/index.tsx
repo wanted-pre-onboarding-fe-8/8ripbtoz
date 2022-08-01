@@ -14,4 +14,7 @@ const CardContainer = styled.div`
   grid-auto-rows: auto;
   grid-gap: 10px;
   place-items: center center;
+  @media screen and (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
 `;
