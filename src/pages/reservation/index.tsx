@@ -35,6 +35,46 @@ export default function Reservation() {
       startDate: '2022-08-12',
       endDate: '2022-08-13',
     },
+    {
+      id: 1232458,
+      reservationDate: {
+        weekDay: 'monday',
+        date: '2022-08-01',
+      },
+      hotelName: '라마다 제주시티홀',
+      startDate: '2022-08-12',
+      endDate: '2022-08-13',
+    },
+    {
+      id: 1232459,
+      reservationDate: {
+        weekDay: 'monday',
+        date: '2022-08-01',
+      },
+      hotelName: '라마다 제주시티홀',
+      startDate: '2022-08-12',
+      endDate: '2022-08-13',
+    },
+    {
+      id: 1232460,
+      reservationDate: {
+        weekDay: 'monday',
+        date: '2022-08-01',
+      },
+      hotelName: '라마다 제주시티홀',
+      startDate: '2022-08-12',
+      endDate: '2022-08-13',
+    },
+    {
+      id: 1232461,
+      reservationDate: {
+        weekDay: 'monday',
+        date: '2022-08-01',
+      },
+      hotelName: '라마다 제주시티홀',
+      startDate: '2022-08-12',
+      endDate: '2022-08-13',
+    },
   ];
   return (
     <Wrapper>
@@ -84,7 +124,9 @@ const Tab = styled.li`
 const Main = styled.main`
   min-height: 400px;
   flex-basis: 75%;
-  background-color: white;
 `;
 
-const Reservations = styled.ul``;
+const Reservations = styled.ul`
+  display: flex;
+  flex-direction: column;
+`;
