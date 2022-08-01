@@ -43,6 +43,9 @@ const Container = styled(GridCard)<{ disabled: boolean }>`
   grid-template-areas:
     'image title title '
     'image .  button';
+  color: ${({ disabled }) => (disabled ? 'lightGray' : 'inherit')};
+  filter: ${({ disabled }) => disabled && 'grayscale(100%)'};
+  opacity: ${({ disabled }) => disabled && '0.7'};
 `;
 
 const ImgWrapper = styled.div`
