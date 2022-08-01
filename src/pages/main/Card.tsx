@@ -56,7 +56,7 @@ const Container = styled(GridCard)<{ disabled: boolean }>`
 `;
 
 const ImgWrapper = styled.div`
-  width: calc(100% + 10 * 2);
+  width: calc(100% + 2 * 10px);
   margin: 10px 0 10px -10px;
   height: 100%;
   overflow: hidden;
