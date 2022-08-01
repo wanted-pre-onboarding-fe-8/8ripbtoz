@@ -1,8 +1,41 @@
 import React from 'react';
 import { Container } from '@mui/material';
 import styled from 'styled-components';
+import ReservationCard from './ReservationCard';
 
 export default function Reservation() {
+  const reservations: any[] = [
+    {
+      id: 1232455,
+      reservationDate: {
+        weekDay: 'monday',
+        date: '2022-08-01',
+      },
+      hotelName: '라마다 제주시티홀',
+      startDate: '2022-08-12',
+      endDate: '2022-08-13',
+    },
+    {
+      id: 1232456,
+      reservationDate: {
+        weekDay: 'monday',
+        date: '2022-08-01',
+      },
+      hotelName: '라마다 제주시티홀',
+      startDate: '2022-08-12',
+      endDate: '2022-08-13',
+    },
+    {
+      id: 1232457,
+      reservationDate: {
+        weekDay: 'monday',
+        date: '2022-08-01',
+      },
+      hotelName: '라마다 제주시티홀',
+      startDate: '2022-08-12',
+      endDate: '2022-08-13',
+    },
+  ];
   return (
     <Wrapper>
       <Container maxWidth='md' sx={{ display: 'flex', padding: '2rem 0', minHeight: '100vh' }}>
@@ -11,7 +44,13 @@ export default function Reservation() {
             <Tab>예정된 예약</Tab>
           </Tabs>
         </Aside>
-        <Main></Main>
+        <Main>
+          <Reservations>
+            {reservations.map((reservation) => (
+              <ReservationCard key={reservation.id} reservation={reservation} />
+            ))}
+          </Reservations>
+        </Main>
       </Container>
     </Wrapper>
   );
@@ -47,3 +86,5 @@ const Main = styled.main`
   flex-basis: 75%;
   background-color: white;
 `;
+
+const Reservations = styled.ul``;
