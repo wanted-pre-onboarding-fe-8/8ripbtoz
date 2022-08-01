@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from '@mui/material';
+import { Container, useMediaQuery } from '@mui/material';
 import styled from 'styled-components';
 import ReservationCard from './ReservationCard';
 
@@ -78,7 +78,10 @@ export default function Reservation() {
   ];
   return (
     <Wrapper>
-      <Container maxWidth='md' sx={{ display: 'flex', padding: '2rem 0', minHeight: '100vh' }}>
+      <ReservationContainer
+        maxWidth='md'
+        sx={{ display: 'flex', padding: '2rem 0', minHeight: '100vh' }}
+      >
         <Aside>
           <Tabs>
             <Tab>예정된 예약</Tab>
@@ -91,7 +94,7 @@ export default function Reservation() {
             ))}
           </Reservations>
         </Main>
-      </Container>
+      </ReservationContainer>
     </Wrapper>
   );
 }
@@ -100,9 +103,20 @@ const Wrapper = styled.div`
   background: #f5f5f5;
 `;
 
+const ReservationContainer = styled(Container)`
+  @media (max-width: 890px) {
+    flex-direction: column;
+    max-width: 600px;
+  }
+`;
+
 const Aside = styled.aside`
   margin-right: 30px;
   flex-basis: 25%;
+
+  @media (max-width: 890px) {
+    margin-right: 0;
+  }
 `;
 
 const Tabs = styled.ul`
@@ -119,6 +133,10 @@ const Tab = styled.li`
   color: rgb(255, 55, 92);
   background-color: rgb(255, 241, 241);
   cursor: pointer;
+
+  @media (max-width: 600px) {
+    font-size: 3vw;
+  }
 `;
 
 const Main = styled.main`
