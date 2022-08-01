@@ -46,6 +46,10 @@ const Card = styled.li`
   margin-bottom: 1rem;
   padding: 1rem 3rem;
   background: white;
+
+  @media (max-width: 600px) {
+    padding: 2vw 3vw;
+  }
 `;
 
 const CardHeader = styled.div`
@@ -55,12 +59,21 @@ const CardHeader = styled.div`
   font-size: 16px;
   color: #c5c5c5;
   border-bottom: 1px solid #eeeeee;
+
+  @media (max-width: 600px) {
+    padding: 2.3vw 0;
+    font-size: 3vw;
+  }
 `;
 
 const ReservationNumber = styled.span`
   margin-left: 1rem;
   font-weight: bold;
   color: black;
+
+  @media (max-width: 600px) {
+    margin-left: 1.3vw;
+  }
 `;
 
 const ReservationDate = styled.div``;
@@ -79,12 +92,21 @@ const DetailButton = styled.button`
   align-self: stretch;
   background-color: inherit;
   cursor: pointer;
+
+  @media (max-width: 600px) {
+    font-size: 1vw;
+  }
 `;
 
 const HotelName = styled.h3`
   margin: 1.5rem 0;
   font-size: 22px;
   font-weight: bold;
+
+  @media (max-width: 600px) {
+    margin: 4vw 0;
+    font-size: 4vw;
+  }
 `;
 
 const Schedule = styled.div`
@@ -94,5 +116,10 @@ const Schedule = styled.div`
 
   & > span {
     color: black;
+  }
+
+  @media (max-width: 600px) {
+    margin: 1.3vw 0;
+    font-size: 3vw;
   }
 `;
