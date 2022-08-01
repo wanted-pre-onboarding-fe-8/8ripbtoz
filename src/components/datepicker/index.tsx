@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from './Header';
-import { DISPLAY_WEEKDAYS } from '../../utils/constants/time';
-
+import Weekdays from './Weekdays';
 import {
   eachWeekOfInterval,
   endOfMonth,
@@ -27,11 +26,7 @@ function Datepicker() {
   return (
     <Container>
       <Header today={today} />
-      <Weekdays>
-        {DISPLAY_WEEKDAYS.map((day) => {
-          return <Weekday key={day}>{day}</Weekday>;
-        })}
-      </Weekdays>
+      <Weekdays />
       <Days>
         {startDatesOfWeeks.map((startDateOfWeek) => {
           const endDateOfWeek = endOfWeek(startDateOfWeek);
@@ -60,17 +55,6 @@ const Container = styled.section`
   max-width: 340px;
   margin: 0 auto;
   padding: 24px;
-`;
-
-const Weekdays = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 24px 0;
-`;
-const Weekday = styled.div`
-  width: 32px;
-  text-align: center;
 `;
 
 const Days = styled.div`
