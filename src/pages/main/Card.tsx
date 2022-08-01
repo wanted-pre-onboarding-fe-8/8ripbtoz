@@ -43,9 +43,13 @@ const Container = styled(GridCard)<{ disabled: boolean }>`
   grid-template-areas:
     'image title title '
     'image .  button';
+
   color: ${({ disabled }) => (disabled ? 'lightGray' : 'inherit')};
   filter: ${({ disabled }) => disabled && 'grayscale(100%)'};
   opacity: ${({ disabled }) => disabled && '0.7'};
+  & > button {
+    cursor: ${({ disabled }) => disabled && 'default'};
+  }
   @media screen and (max-width: 480px) {
     aspect-ratio: 9 / 4;
   }
@@ -78,4 +82,5 @@ const ReservationButton = styled.button`
   color: white;
   width: fit-content;
   justify-self: right;
+  cursor: pointer;
 `;
