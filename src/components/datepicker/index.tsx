@@ -1,8 +1,8 @@
 import React from 'react';
+import Header from './Header';
 import { DISPLAY_WEEKDAYS } from '../../utils/constants/time';
-import { ChevronLeft, ChevronRight } from '@mui/icons-material';
+
 import {
-  format,
   eachWeekOfInterval,
   endOfMonth,
   startOfMonth,
@@ -26,11 +26,7 @@ function Datepicker() {
 
   return (
     <Container>
-      <Header>
-        <ChevronLeft />
-        <YearAndMonth>{format(today, 'yyyy년 M월')}</YearAndMonth>
-        <ChevronRight />
-      </Header>
+      <Header today={today} />
       <Weekdays>
         {DISPLAY_WEEKDAYS.map((day) => {
           return <Weekday key={day}>{day}</Weekday>;
@@ -65,13 +61,6 @@ const Container = styled.section`
   margin: 0 auto;
   padding: 24px;
 `;
-
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-const YearAndMonth = styled.span``;
 
 const Weekdays = styled.div`
   display: flex;
