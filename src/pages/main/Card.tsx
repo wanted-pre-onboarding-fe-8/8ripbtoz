@@ -46,6 +46,9 @@ const Container = styled(GridCard)<{ disabled: boolean }>`
   color: ${({ disabled }) => (disabled ? 'lightGray' : 'inherit')};
   filter: ${({ disabled }) => disabled && 'grayscale(100%)'};
   opacity: ${({ disabled }) => disabled && '0.7'};
+  @media screen and (max-width: 480px) {
+    aspect-ratio: 9 / 4;
+  }
 `;
 
 const ImgWrapper = styled.div`
