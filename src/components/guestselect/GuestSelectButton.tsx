@@ -19,16 +19,14 @@ export default function GuestSelectButton({ ...props }: GuestSelectButtonProps) 
   return (
     <>
       {ButtonGroup.map((button, index) => (
-        <>
-          <ButtonGroups key={button.key} style={{ display: 'flex' }}>
-            <Button
-              name={button.key}
-              disabled={button.key === DECREASE && count === 0}
-              onClick={() => handleChange(button.key, item)}
-            >
-              {button.value}
-            </Button>
-          </ButtonGroups>
+        <ButtonGroups key={index} style={{ display: 'flex' }}>
+          <Button
+            name={button.key}
+            disabled={button.key === DECREASE && count === 0}
+            onClick={() => handleChange(button.key, item)}
+          >
+            {button.value}
+          </Button>
           {index === 1 ? (
             <Counter style={{ display: 'none' }} />
           ) : item === ADULT ? (
@@ -36,7 +34,7 @@ export default function GuestSelectButton({ ...props }: GuestSelectButtonProps) 
           ) : (
             <Counter>{count}</Counter>
           )}
-        </>
+        </ButtonGroups>
       ))}
     </>
   );
