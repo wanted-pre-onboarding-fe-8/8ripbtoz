@@ -1,59 +1,105 @@
 import React from 'react';
-import { DISPLAY_WEEKDAYS } from '../../utils/constants/time';
-import { ChevronLeft, ChevronRight } from '@mui/icons-material';
-import {
-  format,
-  eachWeekOfInterval,
-  endOfMonth,
-  startOfMonth,
-  endOfWeek,
-  eachDayOfInterval,
-  isBefore,
-  isAfter,
-} from 'date-fns';
+import { RESERVATION_MONTH_LIMIT } from '../../utils/constants/time';
+import { CheckInAndOut } from './types';
+import { addDays, addMonths, isSameMonth, isBefore } from 'date-fns';
+import Header from './Header';
+import Weekdays from './Weekdays';
+import Body from './Body';
 import styled from 'styled-components';
 
 function Datepicker() {
   const today = new Date();
 
-  const startDatesOfWeeks = eachWeekOfInterval({
-    start: startOfMonth(today),
-    end: endOfMonth(today),
+  const [currentMonth, setCurrentMonth] = React.useState(today);
+  const maxMonth = addMonths(today, RESERVATION_MONTH_LIMIT);
+  const [isChevronActive, setIsChevronActive] = React.useState({
+    prev: false,
+    next: true,
   });
 
-  const isOutOfRange = (date: Date) =>
-    isBefore(date, startOfMonth(today)) || isAfter(date, endOfMonth(today));
+  const [checkInAndOut, setCheckInAndOut] = React.useState<CheckInAndOut>({
+    checkIn: addDays(today, 7),
+    checkOut: addDays(today, 8),
+  });
+
+  React.useEffect(() => {
+    const setActivation = (date: Date) => {
+      const activation = {
+        prev: !isSameMonth(today, date),
+        next: !isSameMonth(maxMonth, date),
+      };
+
+      setIsChevronActive(activation);
+    };
+
+    setActivation(currentMonth);
+  }, [currentMonth]);
+
+  const handleClickPrevMonth = () => {
+    const isEarliestMonth = (date: Date) => {
+      return isSameMonth(date, today);
+    };
+
+    if (isEarliestMonth(currentMonth)) {
+      return;
+    }
+
+    setCurrentMonth(addMonths(currentMonth, -1));
+  };
+
+  const handleClickNextMonth = () => {
+    const isMaxMonth = (date: Date) => {
+      return isSameMonth(date, maxMonth);
+    };
+
+    if (isMaxMonth(currentMonth)) {
+      return;
+    }
+
+    setCurrentMonth(addMonths(currentMonth, 1));
+  };
+
+  const handleClickDate = (date: Date) => {
+    const { checkIn, checkOut } = checkInAndOut;
+    const isAnotherDay = checkIn && checkOut;
+    const isCheckOutEmpty = !checkOut;
+    const isNewDayBeforeCheckIn = checkIn && isBefore(date, checkIn);
+
+    const setNewCheckIn = () =>
+      setCheckInAndOut({
+        checkIn: date,
+        checkOut: null,
+      });
+
+    const setNewCheckOut = () =>
+      setCheckInAndOut({
+        ...checkInAndOut,
+        checkOut: date,
+      });
+
+    if (isAnotherDay) {
+      setNewCheckIn();
+    }
+
+    if (isCheckOutEmpty) {
+      setNewCheckOut();
+    }
+
+    if (isNewDayBeforeCheckIn) {
+      setNewCheckIn();
+    }
+  };
 
   return (
     <Container>
-      <Header>
-        <ChevronLeft />
-        <YearAndMonth>{format(today, 'yyyy년 M월')}</YearAndMonth>
-        <ChevronRight />
-      </Header>
-      <Weekdays>
-        {DISPLAY_WEEKDAYS.map((day) => {
-          return <Weekday key={day}>{day}</Weekday>;
-        })}
-      </Weekdays>
-      <Days>
-        {startDatesOfWeeks.map((startDateOfWeek) => {
-          const endDateOfWeek = endOfWeek(startDateOfWeek);
-          const days = eachDayOfInterval({
-            start: startDateOfWeek,
-            end: endDateOfWeek,
-          });
-          const daysOfWeek = days.map((day) => {
-            return isOutOfRange(day) ? (
-              <Day key={day.toDateString()}></Day>
-            ) : (
-              <Day key={day.toDateString()}>{day.getDate()}</Day>
-            );
-          });
-
-          return <DaysOfTheWeek key={startDateOfWeek.toDateString()}>{daysOfWeek}</DaysOfTheWeek>;
-        })}
-      </Days>
+      <Header
+        currentMonth={currentMonth}
+        isActive={isChevronActive}
+        onClickPrevMonth={handleClickPrevMonth}
+        onClickNextMonth={handleClickNextMonth}
+      />
+      <Weekdays />
+      <Body today={today} checkInAndOut={checkInAndOut} onClickDate={handleClickDate} />
     </Container>
   );
 }
@@ -64,37 +110,4 @@ const Container = styled.section`
   max-width: 340px;
   margin: 0 auto;
   padding: 24px;
-`;
-
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-const YearAndMonth = styled.span``;
-
-const Weekdays = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 24px 0;
-`;
-const Weekday = styled.div`
-  width: 32px;
-  text-align: center;
-`;
-
-const Days = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-`;
-const DaysOfTheWeek = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-const Day = styled.div`
-  width: 32px;
-  text-align: center;
 `;
