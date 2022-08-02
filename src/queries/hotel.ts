@@ -1,8 +1,8 @@
 import httpClient from '../http';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { IHotels, IPayload } from '../types/index';
+import { IHotels, ISearchPayload } from '../types/index';
 
-export function getHotels(payload: IPayload) {
+export function getHotels(payload: ISearchPayload) {
   const query = `?hotelName_like=${payload.hotelName}&max_gte=${payload.max}`;
   return useQuery(['hotels'], () => httpClient.get<IHotels>(`/hotels${query}`));
 }

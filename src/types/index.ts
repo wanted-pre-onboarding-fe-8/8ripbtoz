@@ -8,8 +8,7 @@ export interface IHotel {
 
 export type IHotels = IHotel[];
 
-export interface IPayload {
+export interface ISearchPayload {
   hotelName?: string;
   max?: number;
-  reservation?: boolean;
 }
