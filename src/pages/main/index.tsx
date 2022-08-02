@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import Search from './search';
-import { useGetHotels } from '../../queries/hotel';
+import { getHotels } from '../../queries/hotel';
 
 export default function Main() {
-  const payload = { hotelName: '', max: 0 };
-  const { data: hotels, isLoading } = useGetHotels(payload);
+  const [payload, setPayload] = React.useState({ hotelName: '', max: 0 });
+  const { data: hotels, isLoading } = getHotels(payload);
 
   if (hotels === undefined) {
     return <></>;
@@ -14,6 +14,11 @@ export default function Main() {
   return (
     <Wrapper>
       <Search />
+      {isLoading
+        ? ''
+        : hotels.map((hotel) => {
+            console.log(hotel);
+          })}
     </Wrapper>
   );
 }
