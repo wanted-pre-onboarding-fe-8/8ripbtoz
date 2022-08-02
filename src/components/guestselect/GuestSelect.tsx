@@ -25,14 +25,14 @@ export default function GuestSelect() {
   const childCount = count.child;
 
   const handleChange = (button: string, item: string) => {
-    if (button === DECREASE && item === ADULT)
-      return setCount({ ...count, adult: count.adult - 1 });
-    if (button === DECREASE && item === CHILD)
+    if (button === DECREASE) {
+      if (item === ADULT) return setCount({ ...count, adult: count.adult - 1 });
       return setCount({ ...count, child: count.child - 1 });
-    if (button === INCREASE && item === ADULT)
-      return setCount({ ...count, adult: count.adult + 1 });
-    if (button === INCREASE && item === CHILD)
+    }
+    if (button === INCREASE) {
+      if (item === ADULT) return setCount({ ...count, adult: count.adult + 1 });
       return setCount({ ...count, child: count.child + 1 });
+    }
   };
 
   console.log(count);
