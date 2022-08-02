@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
-import { usePopup, Popup } from './Popup';
+import { usePopup, Popup } from '../Popup';
 
 export default function Schedule() {
   const { isOpen, open, close } = usePopup();
@@ -22,8 +22,8 @@ export default function Schedule() {
           </CheckWrapper>
         </DateWrapper>
       </Contents>
-      <Popup isOpen={isOpen} close={close}>
-        <PopupTest>hello</PopupTest>
+      <Popup top={60} left={0} isOpen={isOpen} close={close}>
+        <PopupTest>달력</PopupTest>
       </Popup>
     </Wrapper>
   );

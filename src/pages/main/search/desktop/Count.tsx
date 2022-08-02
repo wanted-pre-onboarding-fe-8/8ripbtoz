@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
-import { usePopup, Popup } from './Popup';
+import { usePopup, Popup } from '../Popup';
 
 export default function Count() {
   const { isOpen, open, close } = usePopup();
@@ -15,8 +15,8 @@ export default function Count() {
           <CountValue>객실 1, 인원 2</CountValue>
         </CountWrapper>
       </Contents>
-      <Popup isOpen={isOpen} close={close}>
-        <PopupTest>hello</PopupTest>
+      <Popup top={60} left={0} isOpen={isOpen} close={close}>
+        <PopupTest>인원</PopupTest>
       </Popup>
     </Wrapper>
   );
