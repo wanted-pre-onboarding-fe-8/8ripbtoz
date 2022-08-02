@@ -1,6 +1,7 @@
 import React from 'react';
 import { RESERVATION_MONTH_LIMIT } from '../../utils/constants/time';
-import { addDays, addMonths, isSameMonth } from 'date-fns';
+import { CheckInAndOut } from './types';
+import { addDays, addMonths, isSameMonth, isBefore } from 'date-fns';
 import Header from './Header';
 import Weekdays from './Weekdays';
 import Body from './Body';
@@ -16,7 +17,7 @@ function Datepicker() {
     next: true,
   });
 
-  const [checkInAndOut, setCheckInAndOut] = React.useState({
+  const [checkInAndOut, setCheckInAndOut] = React.useState<CheckInAndOut>({
     checkIn: addDays(today, 7),
     checkOut: addDays(today, 8),
   });
@@ -58,6 +59,37 @@ function Datepicker() {
     setCurrentMonth(addMonths(currentMonth, 1));
   };
 
+  const handleClickDate = (date: Date) => {
+    const { checkIn, checkOut } = checkInAndOut;
+    const isAnotherDay = checkIn && checkOut;
+    const isCheckOutEmpty = !checkOut;
+    const isNewDayBeforeCheckIn = checkIn && isBefore(date, checkIn);
+
+    const setNewCheckIn = () =>
+      setCheckInAndOut({
+        checkIn: date,
+        checkOut: null,
+      });
+
+    const setNewCheckOut = () =>
+      setCheckInAndOut({
+        ...checkInAndOut,
+        checkOut: date,
+      });
+
+    if (isAnotherDay) {
+      setNewCheckIn();
+    }
+
+    if (isCheckOutEmpty) {
+      setNewCheckOut();
+    }
+
+    if (isNewDayBeforeCheckIn) {
+      setNewCheckIn();
+    }
+  };
+
   return (
     <Container>
       <Header
@@ -67,7 +99,7 @@ function Datepicker() {
         onClickNextMonth={handleClickNextMonth}
       />
       <Weekdays />
-      <Body today={today} checkInAndOut={checkInAndOut} />
+      <Body today={today} checkInAndOut={checkInAndOut} onClickDate={handleClickDate} />
     </Container>
   );
 }

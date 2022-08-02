@@ -1,4 +1,5 @@
 import React from 'react';
+import { CheckInAndOut } from './types';
 import {
   eachWeekOfInterval,
   endOfMonth,
@@ -14,13 +15,11 @@ import styled from 'styled-components';
 
 interface BodyProps {
   today: Date;
-  checkInAndOut: {
-    checkIn: Date;
-    checkOut: Date;
-  };
+  checkInAndOut: CheckInAndOut;
+  onClickDate: (date: Date) => void;
 }
 
-function Body({ today, checkInAndOut }: BodyProps) {
+function Body({ today, checkInAndOut, onClickDate }: BodyProps) {
   const { checkIn, checkOut } = checkInAndOut;
 
   const startDatesOfWeeks = eachWeekOfInterval({
@@ -44,7 +43,11 @@ function Body({ today, checkInAndOut }: BodyProps) {
             <Day key={day.toDateString()} date={day} check={{ checkIn, checkOut }}></Day>
           ) : (
             <Day key={day.toDateString()} date={day} check={{ checkIn, checkOut }}>
-              <CheckInAndOutHighlight date={day} check={{ checkIn, checkOut }}>
+              <CheckInAndOutHighlight
+                date={day}
+                check={{ checkIn, checkOut }}
+                onClick={() => onClickDate(day)}
+              >
                 <DayText>{day.getDate()}</DayText>
               </CheckInAndOutHighlight>
               <TodayHighlight date={day} />
@@ -74,42 +77,42 @@ const DaysOfTheWeek = styled.div`
 
 interface DayProps {
   date: Date;
-  check: {
-    checkIn: Date;
-    checkOut: Date;
-  };
+  check: CheckInAndOut;
 }
 const Day = styled.div<DayProps>`
   ${({ date, check }) => {
+    const { checkIn, checkOut } = check;
     const commonStyle = `
       flex: 1;
       text-align: center;
       position: relative;
     `;
-    const { checkIn, checkOut } = check;
-    const isCheckIn = isSameDay(date, checkIn);
-    const isCheckOut = isSameDay(date, checkOut);
-    const isDuringRange = isBefore(date, checkOut) && isAfter(date, checkIn);
 
-    if (isCheckIn) {
-      return `
+    if (checkIn && checkOut) {
+      const isCheckIn = isSameDay(date, checkIn);
+      const isCheckOut = isSameDay(date, checkOut);
+      const isDuringRange = isBefore(date, checkOut) && isAfter(date, checkIn);
+
+      if (isCheckIn) {
+        return `
         ${commonStyle}
         background-image: linear-gradient(to right, rgb(255, 255, 255) 50%, rgba(255, 55, 92, 0.2) 50%);
       `;
-    }
+      }
 
-    if (isCheckOut) {
-      return `
+      if (isCheckOut) {
+        return `
         ${commonStyle}
         background-image: linear-gradient(to right, rgba(255, 55, 92, 0.2) 50%, rgb(255, 255, 255) 50%);
       `;
-    }
+      }
 
-    if (isDuringRange) {
-      return `
+      if (isDuringRange) {
+        return `
         ${commonStyle}
         background-image: linear-gradient(to right, rgba(255, 55, 92, 0.2) 50%, rgba(255, 55, 92, 0.2) 50%);
       `;
+      }
     }
 
     return `
@@ -120,15 +123,11 @@ const Day = styled.div<DayProps>`
 
 interface CheckInAndOutHighlightProps {
   date: Date;
-  check: {
-    checkIn: Date;
-    checkOut: Date;
-  };
+  check: CheckInAndOut;
 }
 const CheckInAndOutHighlight = styled.div<CheckInAndOutHighlightProps>`
   ${({ date, check }) => {
     const { checkIn, checkOut } = check;
-    const isTargetDate = isSameDay(date, checkIn) || isSameDay(date, checkOut);
     const commonStyle = `
       display: flex;
       justify-content: center;
@@ -137,23 +136,58 @@ const CheckInAndOutHighlight = styled.div<CheckInAndOutHighlightProps>`
       height: 32px;
       margin: 0 auto;
     `;
-    if (isTargetDate) {
-      return (
-        commonStyle +
-        `
+
+    // if (checkIn && checkOut) {
+    //   const isTargetDate = isSameDay(date, checkIn) || isSameDay(date, checkOut);
+
+    //   if (isTargetDate) {
+    //     return (
+    //       commonStyle +
+    //       `
+    //     background-color: #ff375c;
+    //     color: #fff;
+    //     border-radius: 100%;
+    //   `
+    //     );
+    //   }
+    // }
+
+    if (checkIn) {
+      const isTargetDate = isSameDay(date, checkIn);
+
+      if (isTargetDate) {
+        return (
+          commonStyle +
+          `
         background-color: #ff375c;
         color: #fff;
         border-radius: 100%;
       `
-      );
-    } else {
-      return (
-        commonStyle +
-        `
+        );
+      }
+    }
+
+    if (checkOut) {
+      const isTargetDate = isSameDay(date, checkOut);
+
+      if (isTargetDate) {
+        return (
+          commonStyle +
+          `
+        background-color: #ff375c;
+        color: #fff;
+        border-radius: 100%;
+      `
+        );
+      }
+    }
+
+    return (
+      commonStyle +
+      `
         background-color: transparent;
       `
-      );
-    }
+    );
   }}
 `;
 
