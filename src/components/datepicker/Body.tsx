@@ -41,9 +41,9 @@ function Body({ today, checkInAndOut }: BodyProps) {
         });
         const daysOfWeek = days.map((day) => {
           return isOutOfRange(day) ? (
-            <Day key={day.toDateString()}></Day>
+            <Day key={day.toDateString()} date={day} check={{ checkIn, checkOut }}></Day>
           ) : (
-            <Day key={day.toDateString()}>
+            <Day key={day.toDateString()} date={day} check={{ checkIn, checkOut }}>
               <CheckInAndOutHighlight date={day} check={{ checkIn, checkOut }}>
                 <DayText>{day.getDate()}</DayText>
               </CheckInAndOutHighlight>
@@ -72,11 +72,50 @@ const DaysOfTheWeek = styled.div`
   justify-content: space-between;
 `;
 
-const Day = styled.div`
-  width: 32px;
-  height: 32px;
-  text-align: center;
-  position: relative;
+interface DayProps {
+  date: Date;
+  check: {
+    checkIn: Date;
+    checkOut: Date;
+  };
+}
+const Day = styled.div<DayProps>`
+  ${({ date, check }) => {
+    const commonStyle = `
+      flex: 1;
+      text-align: center;
+      position: relative;
+    `;
+    const { checkIn, checkOut } = check;
+    const isCheckIn = isSameDay(date, checkIn);
+    const isCheckOut = isSameDay(date, checkOut);
+    const isDuringRange = isBefore(date, checkOut) && isAfter(date, checkIn);
+
+    if (isCheckIn) {
+      return `
+        ${commonStyle}
+        background-image: linear-gradient(to right, rgb(255, 255, 255) 50%, rgba(255, 55, 92, 0.2) 50%);
+      `;
+    }
+
+    if (isCheckOut) {
+      return `
+        ${commonStyle}
+        background-image: linear-gradient(to right, rgba(255, 55, 92, 0.2) 50%, rgb(255, 255, 255) 50%);
+      `;
+    }
+
+    if (isDuringRange) {
+      return `
+        ${commonStyle}
+        background-image: linear-gradient(to right, rgba(255, 55, 92, 0.2) 50%, rgba(255, 55, 92, 0.2) 50%);
+      `;
+    }
+
+    return `
+      ${commonStyle}
+    `;
+  }}
 `;
 
 interface CheckInAndOutHighlightProps {
@@ -91,10 +130,12 @@ const CheckInAndOutHighlight = styled.div<CheckInAndOutHighlightProps>`
     const { checkIn, checkOut } = check;
     const isTargetDate = isSameDay(date, checkIn) || isSameDay(date, checkOut);
     const commonStyle = `
-      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
+      width: 32px;
+      height: 32px;
+      margin: 0 auto;
     `;
     if (isTargetDate) {
       return (
