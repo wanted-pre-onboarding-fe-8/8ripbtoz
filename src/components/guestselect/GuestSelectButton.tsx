@@ -1,32 +1,53 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import React, { EventHandler } from 'react';
 import styled, { css } from 'styled-components';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { GUEST } from '../../utils/constants/guest';
 
 interface GuestSelectButtonProps {
   name?: string;
-  count: number;
-  color?: 'white' | 'gray';
+  count: any;
+  item: string;
+  handleChange: (key: string, item: string) => void;
   disabled?: boolean;
 }
 
-export default function GuestSelectButton({ count, color }: GuestSelectButtonProps) {
+export default function GuestSelectButton({ ...props }: GuestSelectButtonProps) {
+  const { count, handleChange, item, disabled } = props;
+  const { ADULT } = GUEST;
+  const adultCount = count.adult;
+  const chidCount = count.child;
+
   return (
     <>
-      {ButtonGroup.map((button, index) => (
-        <span key={button.key} style={{ display: 'flex' }}>
-          <Button name={button.key}>{button.value}</Button>
-          {index === 1 ? <Counter style={{ display: 'none' }} /> : <Counter>{count}</Counter>}
-        </span>
+      {ButtonGroup.map((button) => (
+        <>
+          <ButtonGroups key={button.key} style={{ display: 'flex' }}>
+            <Button
+              name={button.key}
+              disabled={disabled}
+              onClick={() => handleChange(button.key, item)}
+            >
+              {button.value}
+            </Button>
+          </ButtonGroups>
+          {item === ADULT ? <Counter>{count.adult}</Counter> : <Counter>{count.child}</Counter>}
+        </>
       ))}
     </>
   );
 }
 
-const ButtonGroup = [
+export const ButtonGroup = [
   { key: 'decrease', value: <RemoveIcon style={{ width: '10px', height: '10px' }} /> },
   { key: 'increase', value: <AddIcon style={{ width: '10px', height: '10px' }} /> },
 ];
+
+const ButtonGroups = styled.span`
+  &:first-of-type {
+    background-color: red;
+  }
+`;
 
 const Button = styled.button`
   background-color: #fff;
@@ -37,9 +58,6 @@ const Button = styled.button`
   color: #000;
   font-size: 14px;
   cursor: pointer;
-  &:nth-child(1)::before {
-    background-color: black;
-  }
 `;
 const Counter = styled.div`
   width: 1.5rem;
