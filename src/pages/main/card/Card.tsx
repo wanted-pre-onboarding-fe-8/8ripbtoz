@@ -1,6 +1,6 @@
 import React from 'react';
-import { Typography, Card as GridCard } from '@mui/material';
 import styled from 'styled-components';
+import GridCard from './GridCard';
 
 interface CardProps {
   hotelName: string;
@@ -29,29 +29,13 @@ function Card({ hotelName, occupancy, disabled }: CardProps) {
 
 export default Card;
 
-const mockImg = 'https://i.travelapi.com/hotels/1000000/30000/21800/21727/3e65898e_b.jpg';
-
+const mockImg = 'https://i.travelapi.com/hotels/1000000/30000/25000/24908/4a391ebd_b.jpg';
 const Container = styled(GridCard)<{ disabled: boolean }>`
-  max-width: 650px;
-  display: grid;
-  align-items: center;
-  aspect-ratio: 3 / 1;
-  padding: 0 10px;
-  column-gap: 10px;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  grid-template-areas:
-    'image title title '
-    'image .  button';
-
   color: ${({ disabled }) => (disabled ? 'lightGray' : 'inherit')};
   filter: ${({ disabled }) => disabled && 'grayscale(100%)'};
   opacity: ${({ disabled }) => disabled && '0.7'};
   & > button {
     cursor: ${({ disabled }) => disabled && 'default'};
-  }
-  @media screen and (max-width: 480px) {
-    aspect-ratio: 9 / 4;
   }
 `;
 
@@ -72,6 +56,15 @@ const Img = styled.img`
 const Info = styled.div`
   grid-area: title;
   padding: 10px;
+`;
+
+const Typography = styled.p<{ fontWeight?: string; fontSize?: string; color?: string }>`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: ${({ fontSize }) => (fontSize ? fontSize : '1rem')};
+  font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : '1rem')};
+  color: ${({ color }) => color};
 `;
 
 const ReservationButton = styled.button`
