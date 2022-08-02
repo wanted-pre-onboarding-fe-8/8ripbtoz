@@ -7,14 +7,21 @@ import {
   eachDayOfInterval,
   isBefore,
   isAfter,
+  isToday,
 } from 'date-fns';
 import styled from 'styled-components';
 
 interface BodyProps {
   today: Date;
+  checkInAndOut: {
+    checkIn: Date;
+    checkOut: Date;
+  };
 }
 
-function Body({ today }: BodyProps) {
+function Body({ today, checkInAndOut }: BodyProps) {
+  const { checkIn, checkOut } = checkInAndOut;
+
   const startDatesOfWeeks = eachWeekOfInterval({
     start: startOfMonth(today),
     end: endOfMonth(today),
@@ -35,7 +42,10 @@ function Body({ today }: BodyProps) {
           return isOutOfRange(day) ? (
             <Day key={day.toDateString()}></Day>
           ) : (
-            <Day key={day.toDateString()}>{day.getDate()}</Day>
+            <Day key={day.toDateString()}>
+              <DayText>{day.getDate()}</DayText>
+              <TodayHighlight date={day} />
+            </Day>
           );
         });
 
@@ -60,4 +70,20 @@ const DaysOfTheWeek = styled.div`
 const Day = styled.div`
   width: 32px;
   text-align: center;
+  position: relative;
+`;
+const DayText = styled.span``;
+interface TodayHighlightProps {
+  date: Date;
+}
+const TodayHighlight = styled.span<TodayHighlightProps>`
+  display: ${({ date }) => (isToday(date) ? 'block' : 'none')};
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: red;
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;

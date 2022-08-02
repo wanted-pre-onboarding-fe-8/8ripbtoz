@@ -1,6 +1,6 @@
 import React from 'react';
 import { RESERVATION_MONTH_LIMIT } from '../../utils/constants/time';
-import { addMonths, isSameMonth } from 'date-fns';
+import { addDays, addMonths, isSameMonth } from 'date-fns';
 import Header from './Header';
 import Weekdays from './Weekdays';
 import Body from './Body';
@@ -11,10 +11,14 @@ function Datepicker() {
 
   const [currentMonth, setCurrentMonth] = React.useState(today);
   const maxMonth = addMonths(today, RESERVATION_MONTH_LIMIT);
-
   const [isChevronActive, setIsChevronActive] = React.useState({
     prev: false,
     next: true,
+  });
+
+  const [checkInAndOut, setCheckInAndOut] = React.useState({
+    checkIn: addDays(today, 7),
+    checkOut: addDays(today, 7),
   });
 
   React.useEffect(() => {
@@ -63,7 +67,7 @@ function Datepicker() {
         onClickNextMonth={handleClickNextMonth}
       />
       <Weekdays />
-      <Body today={today} />
+      <Body today={today} checkInAndOut={checkInAndOut} />
     </Container>
   );
 }
