@@ -27,13 +27,7 @@ export default function GuestSelectButton({ ...props }: GuestSelectButtonProps) 
           >
             {button.value}
           </Button>
-          {index === 1 ? (
-            <Counter style={{ display: 'none' }} />
-          ) : item === ADULT ? (
-            <Counter>{count}</Counter>
-          ) : (
-            <Counter>{count}</Counter>
-          )}
+          {index === 1 ? <Counter style={{ display: 'none' }} /> : <Counter>{count}</Counter>}
         </ButtonGroups>
       ))}
     </>
