@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import useScheduleState from '../../../../hooks/useScheduleState';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import { usePopup, Popup } from '../Popup';
 
 export default function Schedule() {
   const { isOpen, open, close } = usePopup();
+  const { checkInString, checkOutString, lodgeCountString, onChange } = useScheduleState();
 
   return (
     <Wrapper onMouseDown={open}>
@@ -13,12 +15,12 @@ export default function Schedule() {
         <DateWrapper>
           <CheckWrapper>
             <CheckTitle align={ALIGN_START}>체크인</CheckTitle>
-            <CheckDate>8월 10일</CheckDate>
+            <CheckDate>{checkInString}</CheckDate>
           </CheckWrapper>
-          <SleepCountWrapper>1박</SleepCountWrapper>
+          <SleepCountWrapper>{lodgeCountString}</SleepCountWrapper>
           <CheckWrapper>
             <CheckTitle align={ALIGN_END}>체크아웃</CheckTitle>
-            <CheckDate>8월 11일</CheckDate>
+            <CheckDate>{checkOutString}</CheckDate>
           </CheckWrapper>
         </DateWrapper>
       </Contents>
