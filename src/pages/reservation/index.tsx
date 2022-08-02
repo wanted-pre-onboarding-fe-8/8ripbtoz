@@ -2,15 +2,8 @@ import React from 'react';
 import { Container, useMediaQuery } from '@mui/material';
 import styled from 'styled-components';
 import ReservationCard from './ReservationCard';
-import { useGetReservationHotels } from '../../queries/hotel';
 
 export default function Reservation() {
-  // const { data: reservations, isLoading } = useGetReservationHotels();
-
-  // if (reservations === undefined) {
-  //   return <></>;
-  // }
-
   const reservations: any[] = [
     {
       id: 1232455,
