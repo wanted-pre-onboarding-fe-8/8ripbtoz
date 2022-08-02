@@ -1,8 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import Search from './search';
+import { useGetHotels } from '../../queries/hotel';
 
 export default function Main() {
+  const payload = { hotelName: '', max: 0 };
+  const { data: hotels, isLoading } = useGetHotels(payload);
+
+  if (hotels === undefined) {
+    return <></>;
+  }
+
   return (
     <Wrapper>
       <Search />
