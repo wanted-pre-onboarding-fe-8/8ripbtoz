@@ -8,6 +8,7 @@ import {
   isBefore,
   isAfter,
   isToday,
+  isSameDay,
 } from 'date-fns';
 import styled from 'styled-components';
 
@@ -43,7 +44,9 @@ function Body({ today, checkInAndOut }: BodyProps) {
             <Day key={day.toDateString()}></Day>
           ) : (
             <Day key={day.toDateString()}>
-              <DayText>{day.getDate()}</DayText>
+              <CheckInAndOutHighlight date={day} check={{ checkIn, checkOut }}>
+                <DayText>{day.getDate()}</DayText>
+              </CheckInAndOutHighlight>
               <TodayHighlight date={day} />
             </Day>
           );
@@ -60,18 +63,59 @@ export default Body;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 12px;
 `;
+
 const DaysOfTheWeek = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 `;
+
 const Day = styled.div`
   width: 32px;
+  height: 32px;
   text-align: center;
   position: relative;
 `;
+
+interface CheckInAndOutHighlightProps {
+  date: Date;
+  check: {
+    checkIn: Date;
+    checkOut: Date;
+  };
+}
+const CheckInAndOutHighlight = styled.div<CheckInAndOutHighlightProps>`
+  ${({ date, check }) => {
+    const { checkIn, checkOut } = check;
+    const isTargetDate = isSameDay(date, checkIn) || isSameDay(date, checkOut);
+    const commonStyle = `
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `;
+    if (isTargetDate) {
+      return (
+        commonStyle +
+        `
+        background-color: #ff375c;
+        color: #fff;
+        border-radius: 100%;
+      `
+      );
+    } else {
+      return (
+        commonStyle +
+        `
+        background-color: transparent;
+      `
+      );
+    }
+  }}
+`;
+
 const DayText = styled.span``;
 interface TodayHighlightProps {
   date: Date;
@@ -80,10 +124,10 @@ const TodayHighlight = styled.span<TodayHighlightProps>`
   display: ${({ date }) => (isToday(date) ? 'block' : 'none')};
   width: 3px;
   height: 3px;
-  border-radius: 50%;
-  background-color: red;
+  border-radius: 100%;
+  background-color: #ff375c;
   position: absolute;
-  bottom: -5px;
+  bottom: 0;
   left: 50%;
   transform: translate(-50%, -50%);
 `;

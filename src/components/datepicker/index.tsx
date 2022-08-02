@@ -18,7 +18,7 @@ function Datepicker() {
 
   const [checkInAndOut, setCheckInAndOut] = React.useState({
     checkIn: addDays(today, 7),
-    checkOut: addDays(today, 7),
+    checkOut: addDays(today, 8),
   });
 
   React.useEffect(() => {
