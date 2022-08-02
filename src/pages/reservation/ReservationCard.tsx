@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 interface ReservationCardProps {
   reservation: {
@@ -34,9 +33,6 @@ export default function ReservationCard({ reservation }: ReservationCardProps) {
             | <span>1박</span>
           </Schedule>
         </CardDetail>
-        <DetailButton>
-          <ArrowForwardIosIcon />
-        </DetailButton>
       </CardContent>
     </Card>
   );
@@ -85,17 +81,6 @@ const CardContent = styled.div`
 
 const CardDetail = styled.div`
   flex-grow: 1;
-`;
-
-const DetailButton = styled.button`
-  padding: 0;
-  align-self: stretch;
-  background-color: inherit;
-  cursor: pointer;
-
-  @media (max-width: 600px) {
-    font-size: 1vw;
-  }
 `;
 
 const HotelName = styled.h3`
