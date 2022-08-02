@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import useGuestCountState from '../../../../hooks/useGuestCountState';
 import { usePopup, Popup } from '../Popup';
 
 export default function Count() {
   const { isOpen, open, close } = usePopup();
+  const { adult, child, total, onChange } = useGuestCountState();
 
   return (
     <Wrapper onMouseDown={open}>
@@ -14,7 +16,7 @@ export default function Count() {
         </CountWrapper>
         <CountWrapper>
           <CountTitle>인원</CountTitle>
-          <CountValue>2</CountValue>
+          <CountValue>{total}</CountValue>
         </CountWrapper>
       </Contents>
       <Popup top={0} left={0} isOpen={isOpen} close={close}>

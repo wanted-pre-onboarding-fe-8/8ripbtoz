@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import useGuestCountState from '../../../../hooks/useGuestCountState';
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 import { usePopup, Popup } from '../Popup';
 
 export default function Count() {
   const { isOpen, open, close } = usePopup();
+  const { adult, child, total, onChange } = useGuestCountState();
 
   return (
     <Wrapper onMouseDown={open}>
@@ -12,7 +14,7 @@ export default function Count() {
         <PermIdentityOutlinedIcon fontSize='large' />
         <CountWrapper>
           <CountTitle>객실 / 인원</CountTitle>
-          <CountValue>객실 1, 인원 2</CountValue>
+          <CountValue>{`객실 1, 인원 ${total}`}</CountValue>
         </CountWrapper>
       </Contents>
       <Popup top={60} left={0} isOpen={isOpen} close={close}>
