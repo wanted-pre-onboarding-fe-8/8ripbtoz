@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler } from 'react';
+import React, { useState } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -8,29 +8,33 @@ import styled from 'styled-components';
 import GuestSelectButton from './GuestSelectButton';
 import { GUEST } from '../../utils/constants/guest';
 
-interface IGuestSelect {
-  props?: any;
+interface IGuestType {
+  adult: number;
+  child: number;
 }
+
 const DEFAULT_NUMBER = {
   adult: 2,
   child: 0,
 };
 
-export default function GuestSelect({ props }: IGuestSelect) {
-  const [count, setCount] = React.useState(DEFAULT_NUMBER);
-
+export default function GuestSelect() {
+  const [count, setCount] = useState<IGuestType>(DEFAULT_NUMBER);
   const { ADULT, CHILD, INCREASE, DECREASE } = GUEST;
+  const adultCount = count.adult;
+  const childCount = count.child;
 
-  const handleChange = (btnkey: string, item: string) => {
-    if (btnkey === DECREASE && item === ADULT)
+  const handleChange = (button: string, item: string) => {
+    if (button === DECREASE && item === ADULT)
       return setCount({ ...count, adult: count.adult - 1 });
-    if (btnkey === DECREASE && item === CHILD)
+    if (button === DECREASE && item === CHILD)
       return setCount({ ...count, child: count.child - 1 });
-    if (btnkey === INCREASE && item === ADULT)
+    if (button === INCREASE && item === ADULT)
       return setCount({ ...count, adult: count.adult + 1 });
-    if (btnkey === INCREASE && item === CHILD)
+    if (button === INCREASE && item === CHILD)
       return setCount({ ...count, child: count.child + 1 });
   };
+
   console.log(count);
 
   return (
@@ -46,7 +50,11 @@ export default function GuestSelect({ props }: IGuestSelect) {
               <ItemMainText>{GuestItem.key}</ItemMainText>
               <ItemSubText>{GuestItem.value}</ItemSubText>
             </ListItemText>
-            <GuestSelectButton item={GuestItem.key} count={count} handleChange={handleChange} />
+            <GuestSelectButton
+              item={GuestItem.key}
+              count={GuestItem.key === ADULT ? adultCount : childCount}
+              handleChange={handleChange}
+            />
           </ListMainItem>
         ))}
       </GuestOptions>
