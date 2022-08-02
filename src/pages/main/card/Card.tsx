@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import GridCard from './GridCard';
+import { setReservationHotel } from '../../../queries/hotel';
 
 interface CardProps {
   hotelName: string;
@@ -9,6 +10,12 @@ interface CardProps {
 }
 
 function Card({ hotelName, occupancy, disabled }: CardProps) {
+  const { mutate } = setReservationHotel();
+
+  const onClick = (id: number) => {
+    mutate(id);
+  };
+
   return (
     <Container sx={{ boxShadow: 'rgb(94 94 94 / 10%) 0px 2px 4px 0px' }} disabled={disabled}>
       <ImgWrapper>
