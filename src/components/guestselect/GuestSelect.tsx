@@ -45,6 +45,9 @@ const GuestItems = [
 
 const Wrapper = styled.section`
   width: 320px;
+  @media screen and (max-width: 480px) {
+    width: 480px;
+  }
 `;
 
 const ContainerHeader = styled.div`
@@ -56,9 +59,14 @@ const ContainerHeader = styled.div`
   font-weight: 500;
   text-align: center;
   padding: 1rem;
+  @media screen and (max-width: 480px) {
+    display: block;
+  }
 `;
 const GuestOptions = styled(List)`
   box-shadow: rgb(0 0 0 / 20%) 0px 5px 20px 0px;
+  @media screen and (min-width: 480px) {
+  }
 `;
 const ListHeader = styled(ListSubheader)`
   border-bottom: 1px solid rgb(238, 238, 238);
