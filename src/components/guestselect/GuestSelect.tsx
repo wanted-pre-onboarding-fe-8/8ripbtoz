@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { ChangeEventHandler } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -6,14 +6,32 @@ import ListSubheader from '@mui/material/ListSubheader';
 import styled from 'styled-components';
 
 import GuestSelectButton from './GuestSelectButton';
-
-const DEFAULT_NUMBER = 2;
+import { GUEST } from '../../utils/constants/guest';
 
 interface IGuestSelect {
   props?: any;
 }
+const DEFAULT_NUMBER = {
+  adult: 2,
+  child: 0,
+};
+
 export default function GuestSelect({ props }: IGuestSelect) {
   const [count, setCount] = React.useState(DEFAULT_NUMBER);
+
+  const { ADULT, CHILD, INCREASE, DECREASE } = GUEST;
+
+  const handleChange = (btnkey: string, item: string) => {
+    if (btnkey === DECREASE && item === ADULT)
+      return setCount({ ...count, adult: count.adult - 1 });
+    if (btnkey === DECREASE && item === CHILD)
+      return setCount({ ...count, child: count.child - 1 });
+    if (btnkey === INCREASE && item === ADULT)
+      return setCount({ ...count, adult: count.adult + 1 });
+    if (btnkey === INCREASE && item === CHILD)
+      return setCount({ ...count, child: count.child + 1 });
+  };
+  console.log(count);
 
   return (
     <Wrapper>
@@ -28,9 +46,7 @@ export default function GuestSelect({ props }: IGuestSelect) {
               <ItemMainText>{GuestItem.key}</ItemMainText>
               <ItemSubText>{GuestItem.value}</ItemSubText>
             </ListItemText>
-            <ButtonGroup>
-              <GuestSelectButton count={count} />
-            </ButtonGroup>
+            <GuestSelectButton item={GuestItem.key} count={count} handleChange={handleChange} />
           </ListMainItem>
         ))}
       </GuestOptions>
