@@ -23,6 +23,8 @@ export default function GuestSelect() {
   const { ADULT, INCREASE, DECREASE } = GUEST;
   const adultCount = count.adult;
   const childCount = count.child;
+  const adultDisabled = adultCount === 1;
+  const childDisabled = childCount === 0;
 
   const handleChange = (button: string, item: string) => {
     if (button === DECREASE) {
@@ -50,6 +52,7 @@ export default function GuestSelect() {
             </ListItemText>
             <GuestSelectButton
               item={GuestItem.key}
+              disabled={GuestItem.key === ADULT ? adultDisabled : childDisabled}
               count={GuestItem.key === ADULT ? adultCount : childCount}
               handleChange={handleChange}
             />

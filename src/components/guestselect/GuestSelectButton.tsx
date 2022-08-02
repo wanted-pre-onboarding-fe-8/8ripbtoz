@@ -7,11 +7,12 @@ import { GUEST } from '../../utils/constants/guest';
 interface GuestSelectButtonProps {
   count: number;
   item: string;
+  disabled: boolean;
   handleChange: (key: string, item: string) => void;
 }
 
 export default function GuestSelectButton({ ...props }: GuestSelectButtonProps) {
-  const { count, handleChange, item } = props;
+  const { count, handleChange, item, disabled } = props;
   const { DECREASE } = GUEST;
 
   return (
@@ -20,7 +21,7 @@ export default function GuestSelectButton({ ...props }: GuestSelectButtonProps) 
         <ButtonGroups key={index} style={{ display: 'flex' }}>
           <Button
             name={button.key}
-            disabled={button.key === DECREASE && count === 0}
+            disabled={button.key === DECREASE && disabled}
             onClick={() => handleChange(button.key, item)}
           >
             {button.value}
