@@ -20,7 +20,7 @@ const DEFAULT_NUMBER = {
 
 export default function GuestSelect() {
   const [count, setCount] = useState<IGuestType>(DEFAULT_NUMBER);
-  const { ADULT, CHILD, INCREASE, DECREASE } = GUEST;
+  const { ADULT, INCREASE, DECREASE } = GUEST;
   const adultCount = count.adult;
   const childCount = count.child;
 
@@ -34,8 +34,6 @@ export default function GuestSelect() {
       return setCount({ ...count, child: count.child + 1 });
     }
   };
-
-  console.log(count);
 
   return (
     <Wrapper>

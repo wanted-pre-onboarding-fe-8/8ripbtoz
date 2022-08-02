@@ -5,16 +5,14 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import { GUEST } from '../../utils/constants/guest';
 
 interface GuestSelectButtonProps {
-  name?: string;
   count: number;
   item: string;
   handleChange: (key: string, item: string) => void;
-  disabled?: boolean;
 }
 
 export default function GuestSelectButton({ ...props }: GuestSelectButtonProps) {
   const { count, handleChange, item } = props;
-  const { ADULT, DECREASE } = GUEST;
+  const { DECREASE } = GUEST;
 
   return (
     <>
