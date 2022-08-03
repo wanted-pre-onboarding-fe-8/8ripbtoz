@@ -13,9 +13,11 @@ export default function Schedule() {
         <DateText>{checkInFullString}</DateText>
         <DateText>{checkOutFullString}</DateText>
       </Contents>
-      <Popup top={0} left={0} isOpen={isOpen} close={close}>
-        <PopupTest>달력</PopupTest>
-      </Popup>
+      {isOpen && (
+        <Popup top={0} left={0} close={close}>
+          <PopupTest>달력</PopupTest>
+        </Popup>
+      )}
     </Wrapper>
   );
 }
