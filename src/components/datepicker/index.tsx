@@ -124,7 +124,7 @@ const Container = styled.section`
   box-shadow: rgb(0 0 0 / 20%) 0px 5px 20px 0px;
   background-color: rgb(255, 255, 255);
   z-index: 2;
-  top: 12px;
+  top: 0;
   left: -282px;
   padding: 46px;
   width: 810px;
