@@ -7,8 +7,8 @@ export const keywordAtom = atom<string>({
 });
 
 export interface ISchedule {
-  checkIn: Date;
-  checkOut: Date;
+  checkIn: Date | null;
+  checkOut: Date | null;
 }
 export const scheduleAtom = atom<ISchedule>({
   key: 'scheduleAtom',
