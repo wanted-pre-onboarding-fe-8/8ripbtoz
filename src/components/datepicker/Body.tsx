@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckInAndOut } from './types';
+import { ISchedule } from '../../types';
 import {
   eachWeekOfInterval,
   endOfMonth,
@@ -15,7 +15,7 @@ import styled from 'styled-components';
 
 interface BodyProps {
   month: Date;
-  checkInAndOut: CheckInAndOut;
+  checkInAndOut: ISchedule;
   onClickDate: (date: Date) => void;
 }
 
@@ -77,7 +77,7 @@ const DaysOfTheWeek = styled.div`
 
 interface DayProps {
   date: Date;
-  check: CheckInAndOut;
+  check: ISchedule;
 }
 const Day = styled.div<DayProps>`
   ${({ date, check }) => {
@@ -123,7 +123,7 @@ const Day = styled.div<DayProps>`
 
 interface CheckInAndOutHighlightProps {
   date: Date;
-  check: CheckInAndOut;
+  check: ISchedule;
 }
 const CheckInAndOutHighlight = styled.div<CheckInAndOutHighlightProps>`
   ${({ date, check }) => {

@@ -1,13 +1,18 @@
 import React from 'react';
 import { RESERVATION_MONTH_LIMIT } from '../../utils/constants/time';
-import { CheckInAndOut } from './types';
-import { addDays, addMonths, isSameMonth, isBefore } from 'date-fns';
+import { ISchedule } from '../../types';
+import { addMonths, isSameMonth, isBefore } from 'date-fns';
 import Header from './Header';
 import Weekdays from './Weekdays';
 import Body from './Body';
 import styled from 'styled-components';
 
-function Datepicker() {
+interface DatepickerProps {
+  checkInAndOut: ISchedule;
+  onChangeDate: (checkInAndOut: ISchedule) => void;
+}
+
+function Datepicker({ checkInAndOut, onChangeDate }: DatepickerProps) {
   const today = new Date();
 
   const [currentMonth, setCurrentMonth] = React.useState(today);
@@ -17,10 +22,10 @@ function Datepicker() {
     next: true,
   });
 
-  const [checkInAndOut, setCheckInAndOut] = React.useState<CheckInAndOut>({
-    checkIn: addDays(today, 7),
-    checkOut: addDays(today, 8),
-  });
+  // const [checkInAndOut, setCheckInAndOut] = React.useState<CheckInAndOut>({
+  //   checkIn: addDays(today, 7),
+  //   checkOut: addDays(today, 8),
+  // });
 
   React.useEffect(() => {
     const setActivation = (date: Date) => {
@@ -66,13 +71,13 @@ function Datepicker() {
     const isNewDayBeforeCheckIn = checkIn && isBefore(date, checkIn);
 
     const setNewCheckIn = () =>
-      setCheckInAndOut({
+      onChangeDate({
         checkIn: date,
         checkOut: null,
       });
 
     const setNewCheckOut = () =>
-      setCheckInAndOut({
+      onChangeDate({
         ...checkInAndOut,
         checkOut: date,
       });
