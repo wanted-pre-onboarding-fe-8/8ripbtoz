@@ -1,17 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ISearchPayload } from '../../../../types';
+import useSearchPayload from '../../../../hooks/useSearchPayload';
 import Count from './Count';
 import Schedule from './Schedule';
 import Text from './Text';
 import SearchIcon from '@mui/icons-material/Search';
 
-export default function Search() {
+interface ISearchProps {
+  setPayload: React.Dispatch<React.SetStateAction<ISearchPayload>>;
+}
+
+export default function Search({ setPayload }: ISearchProps) {
+  const payload = useSearchPayload();
+
+  const handleSearchClick = () => {
+    setPayload(payload);
+  };
+
   return (
     <Wrapper>
       <Text />
       <Schedule />
       <Count />
-      <Button>
+      <Button onClick={handleSearchClick}>
         <StyledSearchIcon fontSize='large' />
       </Button>
     </Wrapper>
