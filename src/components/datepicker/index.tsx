@@ -2,7 +2,7 @@ import React from 'react';
 import { RESERVATION_MONTH_LIMIT } from '../../utils/constants/time';
 import { ISchedule } from '../../types';
 import { addMonths, isSameMonth, isBefore } from 'date-fns';
-import Header from './Header';
+import Navigation from './Navigation';
 import Calendar from './Calendar';
 import styled from 'styled-components';
 
@@ -93,7 +93,7 @@ function Datepicker({ checkInAndOut, onChangeDate }: DatepickerProps) {
 
   return (
     <Container>
-      <Header
+      <Navigation
         currentMonth={currentMonth}
         isActive={isChevronActive}
         onClickPrevMonth={handleClickPrevMonth}

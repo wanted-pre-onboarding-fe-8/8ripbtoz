@@ -3,7 +3,7 @@ import React from 'react';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import styled from 'styled-components';
 
-interface HeaderProps {
+interface NavigationProps {
   currentMonth: Date;
   isActive: {
     prev: boolean;
@@ -13,7 +13,7 @@ interface HeaderProps {
   onClickNextMonth: () => void;
 }
 
-function Header({ isActive, onClickPrevMonth, onClickNextMonth }: HeaderProps) {
+function Navigation({ isActive, onClickPrevMonth, onClickNextMonth }: NavigationProps) {
   const { prev, next } = isActive;
   return (
     <Container>
@@ -23,7 +23,7 @@ function Header({ isActive, onClickPrevMonth, onClickNextMonth }: HeaderProps) {
   );
 }
 
-export default Header;
+export default Navigation;
 
 const Container = styled.header`
   width: 100%;
@@ -38,6 +38,7 @@ const ChevronLeftIcon = styled(({ active, ...parentProps }) => <ChevronLeft {...
   color: ${({ active }) => (active ? '#000' : '#ccc')};
   cursor: pointer;
   position: relative;
+  left: 12px;
   float: left;
 `;
 
@@ -47,5 +48,6 @@ const ChevronRightIcon = styled(({ active, ...parentProps }) => <ChevronRight {.
   color: ${({ active }) => (active ? '#000' : '#ccc')};
   cursor: pointer;
   position: relative;
+  right: 12px;
   float: right;
 `;
