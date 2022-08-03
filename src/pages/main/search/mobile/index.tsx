@@ -15,7 +15,7 @@ export default function Search({ setPayload }: ISearchProps) {
 
   useEffect(() => {
     setPayload(payload);
-  }, [payload]);
+  }, [payload.hotelName, payload.max]);
 
   return (
     <Wrapper>

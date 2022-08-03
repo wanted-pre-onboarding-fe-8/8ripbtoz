@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import useGuestCountState from '../../../../hooks/useGuestCountState';
+import GuestSelect from '../../../../components/guestselect/GuestSelect';
 import { usePopup, Popup } from '../Popup';
 
 export default function Count() {
@@ -19,9 +20,13 @@ export default function Count() {
           <CountValue>{total}</CountValue>
         </CountWrapper>
       </Contents>
-      <Popup top={0} left={0} isOpen={isOpen} close={close}>
-        <PopupTest>인원</PopupTest>
-      </Popup>
+      {isOpen && (
+        <Popup top={0} left={0} isOpen={isOpen} close={close}>
+          <PopupTest>
+            <GuestSelect adult={adult} child={child} onChange={onChange} />
+          </PopupTest>
+        </Popup>
+      )}
     </Wrapper>
   );
 }

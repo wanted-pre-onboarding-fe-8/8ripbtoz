@@ -18,7 +18,9 @@ export interface ISchedule {
   checkOut: Date | null;
 }
 
+import { GUEST } from '../utils/constants/guest';
 export interface IGuestCount {
+  [key: typeof GUEST.ADULT | typeof GUEST.CHILD]: number;
   adult: number;
   child: number;
 }
