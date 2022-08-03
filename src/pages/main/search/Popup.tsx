@@ -41,8 +41,8 @@ const Wrapper = styled.div<{
   left: number;
 }>`
   position: absolute;
-  top: ${({ top }) => top};
-  left: ${({ left }) => left};
+  top: ${({ top }) => `${top}px`};
+  left: ${({ left }) => `${left}px`};
   background-color: white;
   z-index: 2;
 `;
