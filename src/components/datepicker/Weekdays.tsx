@@ -15,11 +15,13 @@ function Weekdays() {
 export default Weekdays;
 
 const Container = styled.div`
+  margin-top: 8px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 `;
 const Weekday = styled.div`
-  width: 32px;
+  flex: 1;
+  text-align: center;
   text-align: center;
 `;

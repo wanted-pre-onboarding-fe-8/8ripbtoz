@@ -80,7 +80,7 @@ const Container = styled.div<ContainerProps>`
   -webkit-box-pack: center;
   justify-content: center;
   align-items: center;
-  ${({ order }) => (order === 'left' ? 'padding-right: 4px;' : 'padding-left: 12px;')}
+  ${({ order }) => (order === 'left' ? 'padding-right: 12px;' : 'padding-left: 12px;')}
 `;
 
 const MonthDisplay = styled.span`
@@ -93,6 +93,7 @@ const DateDisplay = styled.section`
 `;
 
 const DaysOfTheWeek = styled.div`
+  margin-top: 8px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
