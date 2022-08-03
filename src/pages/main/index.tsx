@@ -14,11 +14,13 @@ export default function Main() {
   return (
     <Wrapper>
       <Search />
-      {isLoading
-        ? ''
-        : hotels.map((hotel) => {
-            console.log(hotel);
-          })}
+      <>
+        {isLoading
+          ? ''
+          : hotels.map((hotel) => {
+              console.log(hotel);
+            })}
+      </>
     </Wrapper>
   );
 }
