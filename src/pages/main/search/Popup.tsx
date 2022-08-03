@@ -43,4 +43,6 @@ const Wrapper = styled.div<{
   position: absolute;
   top: ${({ top }) => top};
   left: ${({ left }) => left};
+  background-color: white;
+  z-index: 2;
 `;
