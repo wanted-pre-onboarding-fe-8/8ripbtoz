@@ -1,26 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import Search from './search';
+import { ISearchPayload } from '../../types';
 import { getHotels } from '../../queries/hotel';
 
 export default function Main() {
-  const [payload, setPayload] = React.useState({ hotelName: '', max: 0 });
-  const { data: hotels, isLoading } = getHotels(payload);
-
-  if (hotels === undefined) {
-    return <></>;
-  }
+  const [payload, setPayload] = React.useState<ISearchPayload>({ hotelName: '', max: 0 });
+  // const { data: hotels, isLoading } = getHotels(payload);
 
   return (
     <Wrapper>
-      <Search />
-      <>
-        {isLoading
-          ? ''
-          : hotels.map((hotel) => {
-              console.log(hotel);
-            })}
-      </>
+      <Search setPayload={setPayload} />
     </Wrapper>
   );
 }

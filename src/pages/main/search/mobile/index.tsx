@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { ISearchPayload } from '../../../../types';
+import useSearchPayload from '../../../../hooks/useSearchPayload';
 import Count from './Count';
 import Schedule from './Schedule';
 import Text from './Text';
 
-export default function Search() {
+interface ISearchProps {
+  setPayload: React.Dispatch<React.SetStateAction<ISearchPayload>>;
+}
+
+export default function Search({ setPayload }: ISearchProps) {
+  const payload = useSearchPayload();
+
+  useEffect(() => {
+    setPayload(payload);
+  }, [payload]);
+
   return (
     <Wrapper>
       <Text />
