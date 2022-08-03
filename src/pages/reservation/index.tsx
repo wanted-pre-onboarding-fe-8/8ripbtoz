@@ -2,9 +2,10 @@ import React from 'react';
 import { Container } from '@mui/material';
 import styled from 'styled-components';
 import ReservationCard from './ReservationCard';
+import { IReservations } from '../../types';
 
 export default function Reservation() {
-  const reservations: any[] = [
+  const reservations: IReservations = [
     {
       id: 1232455,
       reservationDate: {

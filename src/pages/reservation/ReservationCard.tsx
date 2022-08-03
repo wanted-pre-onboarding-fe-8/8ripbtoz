@@ -1,17 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { IReservation } from '../../types';
 
 interface ReservationCardProps {
-  reservation: {
-    id: number;
-    reservationDate: {
-      weekDay: string;
-      date: string;
-    };
-    hotelName: string;
-    startDate: string;
-    endDate: string;
-  };
+  reservation: IReservation;
 }
 
 export default function ReservationCard({ reservation }: ReservationCardProps) {
