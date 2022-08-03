@@ -4,7 +4,9 @@ import { IHotels, ISearchPayload } from '../types/index';
 
 export function getHotels(payload: ISearchPayload) {
   const query = `?hotelName_like=${payload.hotelName}&max_gte=${payload.max}`;
-  return useQuery(['hotels'], () => httpClient.get<IHotels>(`/hotels${query}`));
+  return useQuery(['hotels', payload.hotelName, payload.max], () =>
+    httpClient.get<IHotels>(`/hotels${query}`),
+  );
 }
 
 export function setReservationHotel() {
