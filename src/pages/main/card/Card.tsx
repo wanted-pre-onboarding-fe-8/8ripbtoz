@@ -1,23 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
-import GridCard from './GridCard';
+import { setHotelItem } from '../../../utils/storage';
 import { setReservationHotel } from '../../../queries/hotel';
+import { IHotel } from '../../../types';
+import GridCard from './GridCard';
 
-interface CardProps {
-  hotelName: string;
-  occupancy: { base: number; max: number };
-  disabled: boolean;
-}
-
-function Card({ hotelName, occupancy, disabled }: CardProps) {
+function Card(hotel: IHotel) {
+  const { hotelName, reservation, base, max, id } = hotel;
   const { mutate } = setReservationHotel();
 
-  const onClick = (id: number) => {
+  const updateReservationStatus = (id: number) => {
     mutate(id);
   };
 
+  const handleClick = (id: number) => {
+    updateReservationStatus(id);
+    setHotelItem(hotel);
+  };
+
   return (
-    <Container sx={{ boxShadow: 'rgb(94 94 94 / 10%) 0px 2px 4px 0px' }} disabled={disabled}>
+    <Container sx={{ boxShadow: 'rgb(94 94 94 / 10%) 0px 2px 4px 0px' }} disabled={reservation}>
       <ImgWrapper>
         <Img src={mockImg} alt={hotelName} />
       </ImgWrapper>
@@ -26,10 +28,12 @@ function Card({ hotelName, occupancy, disabled }: CardProps) {
           {hotelName}
         </Typography>
         <Typography fontSize='13px' color='gray'>
-          기준 {occupancy.base}인 | 최대 {occupancy.max}인
+          기준 {base}인 | 최대 {max}인
         </Typography>
       </Info>
-      <ReservationButton disabled={disabled}>예약</ReservationButton>
+      <ReservationButton disabled={reservation} onClick={() => handleClick(id)}>
+        예약
+      </ReservationButton>
     </Container>
   );
 }
