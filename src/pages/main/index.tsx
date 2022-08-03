@@ -1,11 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
 import Search from './search';
+import { getHotels } from '../../queries/hotel';
 
 export default function Main() {
+  const [payload, setPayload] = React.useState({ hotelName: '', max: 0 });
+  const { data: hotels, isLoading } = getHotels(payload);
+
+  if (hotels === undefined) {
+    return <></>;
+  }
+
   return (
     <Wrapper>
       <Search />
+      <>
+        {isLoading
+          ? ''
+          : hotels.map((hotel) => {
+              console.log(hotel);
+            })}
+      </>
     </Wrapper>
   );
 }
