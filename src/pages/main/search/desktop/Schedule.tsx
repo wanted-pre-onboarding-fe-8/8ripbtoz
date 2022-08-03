@@ -24,9 +24,11 @@ export default function Schedule() {
           </CheckWrapper>
         </DateWrapper>
       </Contents>
-      <Popup top={60} left={0} isOpen={isOpen} close={close}>
-        <PopupTest>달력</PopupTest>
-      </Popup>
+      {isOpen && (
+        <Popup top={60} left={0} close={close}>
+          <PopupTest>달력</PopupTest>
+        </Popup>
+      )}
     </Wrapper>
   );
 }

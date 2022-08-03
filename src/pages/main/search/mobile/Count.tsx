@@ -21,7 +21,7 @@ export default function Count() {
         </CountWrapper>
       </Contents>
       {isOpen && (
-        <Popup top={0} left={0} isOpen={isOpen} close={close}>
+        <Popup top={0} left={0} close={close}>
           <PopupTest>
             <GuestSelect adult={adult} child={child} onChange={onChange} />
           </PopupTest>
