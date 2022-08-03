@@ -1,12 +1,18 @@
+import { getDay } from 'date-fns';
 import React from 'react';
 import styled from 'styled-components';
 import { IReservation } from '../../types';
+import { DISPLAY_WEEKDAYS } from '../../utils/constants/time';
 
 interface ReservationCardProps {
   reservation: IReservation;
 }
 
 export default function ReservationCard({ reservation }: ReservationCardProps) {
+  const weekDay = getDay(new Date(reservation.reservation.date));
+  const startDay = getDay(new Date(reservation.startDate));
+  const endDay = getDay(new Date(reservation.endDate));
+
   return (
     <Card>
       <CardHeader>
@@ -14,14 +20,21 @@ export default function ReservationCard({ reservation }: ReservationCardProps) {
           예약번호<ReservationNumber>{reservation.id}</ReservationNumber>
         </div>
         <ReservationDate>
-          {reservation.reservation.date} ({reservation.reservation.weekDay}) 예약
+          {reservation.reservation.date} ({DISPLAY_WEEKDAYS[weekDay]}) 예약
         </ReservationDate>
       </CardHeader>
       <CardContent>
         <CardDetail>
           <HotelName>{reservation.hotelName}</HotelName>
           <Schedule>
-            일정 <span>{reservation.startDate} (금)</span> | <span>{reservation.endDate} (토)</span>{' '}
+            일정{' '}
+            <span>
+              {reservation.startDate} ({DISPLAY_WEEKDAYS[startDay]})
+            </span>{' '}
+            |{' '}
+            <span>
+              {reservation.endDate} ({DISPLAY_WEEKDAYS[endDay]})
+            </span>{' '}
             | <span>1박</span>
           </Schedule>
         </CardDetail>
