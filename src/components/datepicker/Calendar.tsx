@@ -78,7 +78,6 @@ const Container = styled.div<ContainerProps>`
   flex-direction: column;
   flex-wrap: wrap;
   -webkit-box-pack: center;
-  justify-content: center;
   align-items: center;
   ${({ order }) => (order === 'left' ? 'padding-right: 12px;' : 'padding-left: 12px;')}
 `;
@@ -86,6 +85,8 @@ const Container = styled.div<ContainerProps>`
 const MonthDisplay = styled.span`
   font-size: 16px;
   height: 24px;
+  display: flex;
+  align-items: center;
 `;
 
 const DateDisplay = styled.section`
