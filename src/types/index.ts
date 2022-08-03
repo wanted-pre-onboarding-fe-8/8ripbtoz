@@ -32,7 +32,7 @@ export interface IGuestCount {
 
 export interface IReservation {
   id: number;
-  reservationDate: {
+  reservation: {
     weekDay: string;
     date: string;
   };

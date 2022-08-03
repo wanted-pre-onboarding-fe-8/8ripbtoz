@@ -14,7 +14,7 @@ export default function ReservationCard({ reservation }: ReservationCardProps) {
           예약번호<ReservationNumber>{reservation.id}</ReservationNumber>
         </div>
         <ReservationDate>
-          {reservation.reservationDate.date} ({reservation.reservationDate.weekDay}) 예약
+          {reservation.reservation.date} ({reservation.reservation.weekDay}) 예약
         </ReservationDate>
       </CardHeader>
       <CardContent>
