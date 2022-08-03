@@ -10,7 +10,7 @@ interface setHotelItemProps {
   checkOut: string | null;
 }
 
-function getStorageItem(key: string, defaultValue: Record<string, string>[]) {
+export function getStorageItem(key: string, defaultValue: Record<string, string>[]) {
   try {
     const value = localStorage.getItem(key);
     if (!value || value === 'null') {
@@ -33,7 +33,7 @@ export function setHotelItem({ hotelName, id, checkIn, checkOut }: setHotelItemP
   ]);
 }
 
-function setStorageItem(key: string, value: string | Record<string, string>[]) {
+export function setStorageItem(key: string, value: string | Record<string, string>[]) {
   try {
     if (typeof value === 'object') value = JSON.stringify(value);
     localStorage.setItem(key, value);
