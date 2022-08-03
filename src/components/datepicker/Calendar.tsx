@@ -45,7 +45,7 @@ function Calendar({ order, month, checkInAndOut, onClickDate }: CalendarProps) {
           });
           const daysOfWeek = days.map((day) => {
             return isOutOfRange(day) ? (
-              <Day key={day.toDateString()} date={day} check={{ checkIn, checkOut }}></Day>
+              <EmptyDay key={day.toDateString()}></EmptyDay>
             ) : (
               <Day key={day.toDateString()} date={day} check={{ checkIn, checkOut }}>
                 <CheckInAndOutHighlight
@@ -98,6 +98,12 @@ const DaysOfTheWeek = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+`;
+
+const EmptyDay = styled.div`
+  flex: 1;
+  text-align: center;
+  position: relative;
 `;
 
 interface DayProps {
