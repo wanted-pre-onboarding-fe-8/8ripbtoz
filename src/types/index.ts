@@ -8,6 +8,11 @@ export interface IHotel {
 
 export type IHotels = IHotel[];
 
+export interface IHotelCard extends IHotel {
+  checkIn: string | null;
+  checkOut: string | null;
+}
+
 export interface ISearchPayload {
   hotelName?: string;
   max?: number;
