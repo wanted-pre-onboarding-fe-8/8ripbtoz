@@ -1,6 +1,7 @@
 import { useRecoilState } from 'recoil';
 import { format, differenceInDays } from 'date-fns';
-import { ISchedule, scheduleAtom } from '../store/searchAtom';
+import { scheduleAtom } from '../store/searchAtom';
+import { ISchedule } from '../types';
 
 export default function useScheduleState() {
   const [{ checkIn, checkOut }, setSchedule] = useRecoilState<ISchedule>(scheduleAtom);

@@ -1,5 +1,6 @@
 import { useRecoilState } from 'recoil';
-import { guestCountAtom, IGuestCount } from '../store/searchAtom';
+import { guestCountAtom } from '../store/searchAtom';
+import { IGuestCount } from '../types';
 
 export default function useGuestCountState() {
   const [{ adult, child }, setGuestCount] = useRecoilState<IGuestCount>(guestCountAtom);
