@@ -1,40 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
+import styled from 'styled-components';
+import { GUEST } from '../../utils/constants/guest';
+import { IGuestCount } from '../../types';
+import GuestSelectButton from './GuestSelectButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
-import styled from 'styled-components';
 
-import GuestSelectButton from './GuestSelectButton';
-import { GUEST } from '../../utils/constants/guest';
-
-interface IGuestType {
+interface IGuestSelectProps {
   adult: number;
   child: number;
+  onChange: (guestCount: IGuestCount) => void;
 }
 
-const DEFAULT_NUMBER = {
-  adult: 2,
-  child: 0,
-};
-
-export default function GuestSelect() {
-  const [count, setCount] = useState<IGuestType>(DEFAULT_NUMBER);
-  const { ADULT, INCREASE, DECREASE } = GUEST;
-  const adultCount = count.adult;
-  const childCount = count.child;
-  const adultDisabled = adultCount === 1;
-  const childDisabled = childCount === 0;
+export default function GuestSelect({ adult, child, onChange }: IGuestSelectProps) {
+  const { ADULT, CHILD, INCREASE, ADULT_KO } = GUEST;
+  const adultDisabled = adult === 1;
+  const childDisabled = child === 0;
 
   const handleChange = (button: string, item: string) => {
-    if (button === DECREASE) {
-      if (item === ADULT) return setCount({ ...count, adult: adultCount - 1 });
-      return setCount({ ...count, child: childCount - 1 });
-    }
-    if (button === INCREASE) {
-      if (item === ADULT) return setCount({ ...count, adult: adultCount + 1 });
-      return setCount({ ...count, child: childCount + 1 });
-    }
+    const itemString = item === ADULT_KO ? ADULT : CHILD;
+
+    const state: IGuestCount = { adult, child };
+    state[itemString] += button === INCREASE ? +1 : -1;
+    onChange(state);
   };
 
   return (
@@ -52,8 +42,8 @@ export default function GuestSelect() {
             </ListItemText>
             <GuestSelectButton
               item={GuestItem.key}
-              disabled={GuestItem.key === ADULT ? adultDisabled : childDisabled}
-              count={GuestItem.key === ADULT ? adultCount : childCount}
+              disabled={GuestItem.key === ADULT_KO ? adultDisabled : childDisabled}
+              count={GuestItem.key === ADULT_KO ? adult : child}
               handleChange={handleChange}
             />
           </ListMainItem>
@@ -112,8 +102,4 @@ const ItemMainText = styled.p`
 `;
 const ItemSubText = styled.p`
   font-size: 0.8rem;
-`;
-const ButtonGroup = styled.div`
-  display: flex;
-  width: 5rem;
 `;
