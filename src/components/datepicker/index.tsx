@@ -13,9 +13,8 @@ interface DatepickerProps {
 
 function Datepicker({ checkInAndOut, onChangeDate }: DatepickerProps) {
   const today = new Date();
-  const { checkIn, checkOut } = checkInAndOut;
-  const isReserved = checkIn && checkOut;
-  const [currentMonth, setCurrentMonth] = React.useState(isReserved ? checkIn : today);
+  const { checkIn } = checkInAndOut;
+  const [currentMonth, setCurrentMonth] = React.useState(checkIn);
   const monthLeft = currentMonth;
   const monthRight = addMonths(currentMonth, 1);
   const maxMonth = addMonths(today, RESERVATION_MONTH_LIMIT);
