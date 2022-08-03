@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
-import { format } from 'date-fns';
 import styled from 'styled-components';
 
-interface HeaderProps {
+interface NavigationProps {
   currentMonth: Date;
   isActive: {
     prev: boolean;
@@ -14,32 +13,33 @@ interface HeaderProps {
   onClickNextMonth: () => void;
 }
 
-function Header({ currentMonth, isActive, onClickPrevMonth, onClickNextMonth }: HeaderProps) {
+function Navigation({ isActive, onClickPrevMonth, onClickNextMonth }: NavigationProps) {
   const { prev, next } = isActive;
   return (
     <Container>
       <ChevronLeftIcon active={prev} onClick={onClickPrevMonth} />
-      <YearAndMonth>{format(currentMonth, 'yyyy년 M월')}</YearAndMonth>
       <ChevronRightIcon active={next} onClick={onClickNextMonth} />
     </Container>
   );
 }
 
-export default Header;
+export default Navigation;
 
 const Container = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  width: 100%;
+  position: absolute;
+  left: 0px;
+  padding: 0px 46px;
 `;
-
-const YearAndMonth = styled.span``;
 
 const ChevronLeftIcon = styled(({ active, ...parentProps }) => <ChevronLeft {...parentProps} />)<{
   active: boolean;
 }>`
   color: ${({ active }) => (active ? '#000' : '#ccc')};
   cursor: pointer;
+  position: relative;
+  left: 12px;
+  float: left;
 `;
 
 const ChevronRightIcon = styled(({ active, ...parentProps }) => <ChevronRight {...parentProps} />)<{
@@ -47,4 +47,7 @@ const ChevronRightIcon = styled(({ active, ...parentProps }) => <ChevronRight {.
 }>`
   color: ${({ active }) => (active ? '#000' : '#ccc')};
   cursor: pointer;
+  position: relative;
+  right: 12px;
+  float: right;
 `;

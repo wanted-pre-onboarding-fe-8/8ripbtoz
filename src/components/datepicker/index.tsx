@@ -1,25 +1,26 @@
 import React from 'react';
 import { RESERVATION_MONTH_LIMIT } from '../../utils/constants/time';
-import { CheckInAndOut } from './types';
-import { addDays, addMonths, isSameMonth, isBefore } from 'date-fns';
-import Header from './Header';
-import Weekdays from './Weekdays';
-import Body from './Body';
+import { ISchedule } from '../../types';
+import { addMonths, isSameMonth, isBefore } from 'date-fns';
+import Navigation from './Navigation';
+import Calendar from './Calendar';
 import styled from 'styled-components';
 
-function Datepicker() {
+interface DatepickerProps {
+  checkInAndOut: ISchedule;
+  onChangeDate: (checkInAndOut: ISchedule) => void;
+}
+
+function Datepicker({ checkInAndOut, onChangeDate }: DatepickerProps) {
   const today = new Date();
 
   const [currentMonth, setCurrentMonth] = React.useState(today);
+  const monthLeft = currentMonth;
+  const monthRight = addMonths(currentMonth, 1);
   const maxMonth = addMonths(today, RESERVATION_MONTH_LIMIT);
   const [isChevronActive, setIsChevronActive] = React.useState({
     prev: false,
     next: true,
-  });
-
-  const [checkInAndOut, setCheckInAndOut] = React.useState<CheckInAndOut>({
-    checkIn: addDays(today, 7),
-    checkOut: addDays(today, 8),
   });
 
   React.useEffect(() => {
@@ -66,13 +67,13 @@ function Datepicker() {
     const isNewDayBeforeCheckIn = checkIn && isBefore(date, checkIn);
 
     const setNewCheckIn = () =>
-      setCheckInAndOut({
+      onChangeDate({
         checkIn: date,
         checkOut: null,
       });
 
     const setNewCheckOut = () =>
-      setCheckInAndOut({
+      onChangeDate({
         ...checkInAndOut,
         checkOut: date,
       });
@@ -92,14 +93,24 @@ function Datepicker() {
 
   return (
     <Container>
-      <Header
+      <Navigation
         currentMonth={currentMonth}
         isActive={isChevronActive}
         onClickPrevMonth={handleClickPrevMonth}
         onClickNextMonth={handleClickNextMonth}
       />
-      <Weekdays />
-      <Body month={currentMonth} checkInAndOut={checkInAndOut} onClickDate={handleClickDate} />
+      <Calendar
+        order={'left'}
+        month={monthLeft}
+        checkInAndOut={checkInAndOut}
+        onClickDate={handleClickDate}
+      />
+      <Calendar
+        order={'right'}
+        month={monthRight}
+        checkInAndOut={checkInAndOut}
+        onClickDate={handleClickDate}
+      />
     </Container>
   );
 }
@@ -107,7 +118,15 @@ function Datepicker() {
 export default Datepicker;
 
 const Container = styled.section`
-  max-width: 340px;
-  margin: 0 auto;
-  padding: 24px;
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 5px 20px 0px;
+  background-color: rgb(255, 255, 255);
+  z-index: 2;
+  top: 12px;
+  left: -282px;
+  padding: 46px;
+  width: 810px;
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
 `;

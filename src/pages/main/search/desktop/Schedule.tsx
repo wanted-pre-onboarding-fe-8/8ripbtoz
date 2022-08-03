@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import useScheduleState from '../../../../hooks/useScheduleState';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import { usePopup, Popup } from '../Popup';
+import Datepicker from '../../../../components/datepicker';
 
 export default function Schedule() {
   const { isOpen, open, close } = usePopup();
-  const { checkInString, checkOutString, lodgeCountString, onChange } = useScheduleState();
+  const { checkInString, checkOutString, lodgeCountString, checkIn, checkOut, onChange } =
+    useScheduleState();
 
   return (
     <Wrapper onMouseDown={open}>
@@ -26,7 +28,7 @@ export default function Schedule() {
       </Contents>
       {isOpen && (
         <Popup top={60} left={0} close={close}>
-          <PopupTest>달력</PopupTest>
+          <Datepicker checkInAndOut={{ checkIn, checkOut }} onChangeDate={onChange} />
         </Popup>
       )}
     </Wrapper>
@@ -85,10 +87,4 @@ const CheckDate = styled.p`
 
 const SleepCountWrapper = styled.p`
   font-size: 15px;
-`;
-
-const PopupTest = styled.div`
-  background-color: lightcoral;
-  width: 300px;
-  height: 300px;
 `;
