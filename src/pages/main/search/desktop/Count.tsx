@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import useGuestCountState from '../../../../hooks/useGuestCountState';
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
+import GuestSelect from '../../../../components/guestselect/GuestSelect';
 import { usePopup, Popup } from '../Popup';
 
 export default function Count() {
@@ -17,9 +18,11 @@ export default function Count() {
           <CountValue>{`객실 1, 인원 ${total}`}</CountValue>
         </CountWrapper>
       </Contents>
-      <Popup top={60} left={0} isOpen={isOpen} close={close}>
-        <PopupTest>인원</PopupTest>
-      </Popup>
+      {isOpen && (
+        <Popup top={60} left={0} isOpen={isOpen} close={close}>
+          <GuestSelect adult={adult} child={child} onChange={onChange} />
+        </Popup>
+      )}
     </Wrapper>
   );
 }
@@ -59,10 +62,4 @@ const CountTitle = styled.p`
 const CountValue = styled.p`
   font-size: 16px;
   font-weight: 600;
-`;
-
-const PopupTest = styled.div`
-  background-color: lightcoral;
-  width: 300px;
-  height: 300px;
 `;
