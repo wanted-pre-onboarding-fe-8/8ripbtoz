@@ -7,7 +7,8 @@ function getStorageItem(key: string, defaultValue: string) {
     if (!value || value === 'null') {
       return defaultValue;
     }
-    return value;
+    const parsedValue = JSON.parse(value);
+    return parsedValue;
   } catch {
     return defaultValue;
   }
