@@ -5,12 +5,13 @@ import { ISchedule, scheduleAtom } from '../store/searchAtom';
 export default function useScheduleState() {
   const [{ checkIn, checkOut }, setSchedule] = useRecoilState<ISchedule>(scheduleAtom);
 
-  const checkInString = format(checkIn, 'M월 d일');
-  const checkOutString = format(checkOut, 'M월 d일');
-  const checkInFullString = format(checkIn, 'yyyy.MM.dd');
-  const checkOutFullString = format(checkOut, 'yyyy.MM.dd');
+  const checkInString = checkIn === null ? '날짜 추가' : format(checkIn, 'M월 d일');
+  const checkOutString = checkOut === null ? '날짜 추가' : format(checkOut, 'M월 d일');
+  const checkInFullString = checkIn === null ? '날짜 추가' : format(checkIn, 'yyyy.MM.dd');
+  const checkOutFullString = checkOut === null ? '날짜 추가' : format(checkOut, 'yyyy.MM.dd');
 
-  const lodgeCount = differenceInDays(checkOut, checkIn);
+  const lodgeCount =
+    checkIn === null || checkOut === null ? 0 : differenceInDays(checkOut, checkIn);
   const lodgeCountString = `${lodgeCount}박`;
 
   const onChange = (schedule: ISchedule) => {
