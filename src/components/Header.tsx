@@ -17,6 +17,10 @@ export default function Header() {
 
 const HeaderWrapper = styled.header`
   height: 84px;
+
+  @media (max-width: 1024px) {
+    margin: 0 30px;
+  }
 `;
 
 const Container = styled.div`
