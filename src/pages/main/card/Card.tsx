@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { setHotelItem } from '../../../utils/storage';
+import { IHotelCard } from '../../../types';
 import { setReservationHotel } from '../../../queries/hotel';
-import { IHotel } from '../../../types';
+import { setHotelItem } from '../../../utils/storage';
 import GridCard from './GridCard';
 
-function Card(hotel: IHotel) {
-  const { hotelName, reservation, base, max, id } = hotel;
+function Card(props: IHotelCard) {
+  const { hotelName, reservation, base, max, id, checkIn, checkOut } = props;
   const { mutate } = setReservationHotel();
 
   const updateReservationStatus = (id: number) => {
@@ -15,7 +15,7 @@ function Card(hotel: IHotel) {
 
   const handleClick = (id: number) => {
     updateReservationStatus(id);
-    setHotelItem(hotel);
+    setHotelItem({ hotelName, id, checkIn, checkOut });
   };
 
   return (

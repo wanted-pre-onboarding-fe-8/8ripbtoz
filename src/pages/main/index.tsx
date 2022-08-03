@@ -4,17 +4,19 @@ import Search from './search';
 import { ISearchPayload } from '../../types';
 import { getHotels } from '../../queries/hotel';
 import { Card, Skeleton } from './card';
+import useScheduleValue from '../../hooks/useScheduleValue';
 
 export default function Main() {
   const [payload, setPayload] = React.useState<ISearchPayload>({ hotelName: '', max: 0 });
   const { data: hotels, isLoading } = getHotels(payload);
+  const { checkInString, checkOutString } = useScheduleValue();
 
   return (
     <Wrapper>
       <Search setPayload={setPayload} />
       <CardContainer>
         {hotels?.map((hotel) => (
-          <Card key={hotel.id} {...hotel} />
+          <Card key={hotel.id} {...hotel} checkIn={checkInString} checkOut={checkOutString} />
         ))}
         {isLoading && <Skeleton />}
       </CardContainer>
