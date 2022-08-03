@@ -99,7 +99,7 @@ function Datepicker() {
         onClickNextMonth={handleClickNextMonth}
       />
       <Weekdays />
-      <Body today={today} checkInAndOut={checkInAndOut} onClickDate={handleClickDate} />
+      <Body month={currentMonth} checkInAndOut={checkInAndOut} onClickDate={handleClickDate} />
     </Container>
   );
 }

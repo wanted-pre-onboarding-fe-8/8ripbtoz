@@ -14,21 +14,21 @@ import {
 import styled from 'styled-components';
 
 interface BodyProps {
-  today: Date;
+  month: Date;
   checkInAndOut: CheckInAndOut;
   onClickDate: (date: Date) => void;
 }
 
-function Body({ today, checkInAndOut, onClickDate }: BodyProps) {
+function Body({ month, checkInAndOut, onClickDate }: BodyProps) {
   const { checkIn, checkOut } = checkInAndOut;
 
   const startDatesOfWeeks = eachWeekOfInterval({
-    start: startOfMonth(today),
-    end: endOfMonth(today),
+    start: startOfMonth(month),
+    end: endOfMonth(month),
   });
 
   const isOutOfRange = (date: Date) =>
-    isBefore(date, startOfMonth(today)) || isAfter(date, endOfMonth(today));
+    isBefore(date, startOfMonth(month)) || isAfter(date, endOfMonth(month));
 
   return (
     <Container>
