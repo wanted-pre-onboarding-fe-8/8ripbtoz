@@ -22,11 +22,6 @@ function Datepicker({ checkInAndOut, onChangeDate }: DatepickerProps) {
     next: true,
   });
 
-  // const [checkInAndOut, setCheckInAndOut] = React.useState<CheckInAndOut>({
-  //   checkIn: addDays(today, 7),
-  //   checkOut: addDays(today, 8),
-  // });
-
   React.useEffect(() => {
     const setActivation = (date: Date) => {
       const activation = {
@@ -112,7 +107,6 @@ function Datepicker({ checkInAndOut, onChangeDate }: DatepickerProps) {
 export default Datepicker;
 
 const Container = styled.section`
-  max-width: 340px;
   margin: 0 auto;
   padding: 24px;
 `;
