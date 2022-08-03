@@ -1,81 +1,13 @@
 import React from 'react';
-import { Container, useMediaQuery } from '@mui/material';
+import { Container } from '@mui/material';
 import styled from 'styled-components';
 import ReservationCard from './ReservationCard';
+import { IReservations } from '../../types';
+import { getStorageItem } from '../../utils/storage';
 
 export default function Reservation() {
-  const reservations: any[] = [
-    {
-      id: 1232455,
-      reservationDate: {
-        weekDay: 'monday',
-        date: '2022-08-01',
-      },
-      hotelName: '라마다 제주시티홀',
-      startDate: '2022-08-12',
-      endDate: '2022-08-13',
-    },
-    {
-      id: 1232456,
-      reservationDate: {
-        weekDay: 'monday',
-        date: '2022-08-01',
-      },
-      hotelName: '라마다 제주시티홀',
-      startDate: '2022-08-12',
-      endDate: '2022-08-13',
-    },
-    {
-      id: 1232457,
-      reservationDate: {
-        weekDay: 'monday',
-        date: '2022-08-01',
-      },
-      hotelName: '라마다 제주시티홀',
-      startDate: '2022-08-12',
-      endDate: '2022-08-13',
-    },
-    {
-      id: 1232458,
-      reservationDate: {
-        weekDay: 'monday',
-        date: '2022-08-01',
-      },
-      hotelName: '라마다 제주시티홀',
-      startDate: '2022-08-12',
-      endDate: '2022-08-13',
-    },
-    {
-      id: 1232459,
-      reservationDate: {
-        weekDay: 'monday',
-        date: '2022-08-01',
-      },
-      hotelName: '라마다 제주시티홀',
-      startDate: '2022-08-12',
-      endDate: '2022-08-13',
-    },
-    {
-      id: 1232460,
-      reservationDate: {
-        weekDay: 'monday',
-        date: '2022-08-01',
-      },
-      hotelName: '라마다 제주시티홀',
-      startDate: '2022-08-12',
-      endDate: '2022-08-13',
-    },
-    {
-      id: 1232461,
-      reservationDate: {
-        weekDay: 'monday',
-        date: '2022-08-01',
-      },
-      hotelName: '라마다 제주시티홀',
-      startDate: '2022-08-12',
-      endDate: '2022-08-13',
-    },
-  ];
+  const reservations: IReservations = getStorageItem('hotels', []);
+
   return (
     <Wrapper>
       <ReservationContainer
@@ -88,11 +20,15 @@ export default function Reservation() {
           </Tabs>
         </Aside>
         <Main>
-          <Reservations>
-            {reservations.map((reservation) => (
-              <ReservationCard key={reservation.id} reservation={reservation} />
-            ))}
-          </Reservations>
+          {reservations.length > 0 ? (
+            <Reservations>
+              {reservations.map((reservation) => (
+                <ReservationCard key={reservation.id} reservation={reservation} />
+              ))}
+            </Reservations>
+          ) : (
+            <Message>아직 준비된 예약이 없어요.</Message>
+          )}
         </Main>
       </ReservationContainer>
     </Wrapper>
@@ -147,4 +83,14 @@ const Main = styled.main`
 const Reservations = styled.ul`
   display: flex;
   flex-direction: column;
+`;
+
+const Message = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-size: 22px;
+  font-weight: bold;
+  background: white;
 `;

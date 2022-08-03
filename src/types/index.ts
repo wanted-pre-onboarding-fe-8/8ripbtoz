@@ -29,3 +29,16 @@ export interface IGuestCount {
   adult: number;
   child: number;
 }
+
+export interface IReservation {
+  id: number;
+  reservation: {
+    weekDay: string;
+    date: string;
+  };
+  hotelName: string;
+  startDate: string;
+  endDate: string;
+}
+
+export type IReservations = IReservation[];
