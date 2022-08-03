@@ -19,7 +19,7 @@ export interface ISearchPayload {
 }
 
 export interface ISchedule {
-  checkIn: Date | null;
+  checkIn: Date;
   checkOut: Date | null;
 }
 
