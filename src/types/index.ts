@@ -12,3 +12,13 @@ export interface ISearchPayload {
   hotelName?: string;
   max?: number;
 }
+
+export interface ISchedule {
+  checkIn: Date | null;
+  checkOut: Date | null;
+}
+
+export interface IGuestCount {
+  adult: number;
+  child: number;
+}

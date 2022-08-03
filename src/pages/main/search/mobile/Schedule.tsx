@@ -1,15 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
+import useScheduleState from '../../../../hooks/useScheduleState';
 import { usePopup, Popup } from '../Popup';
 
 export default function Schedule() {
   const { isOpen, open, close } = usePopup();
+  const { checkInFullString, checkOutFullString, onChange } = useScheduleState();
 
   return (
     <Wrapper onMouseDown={open}>
       <Contents>
-        <DateText>2022.08.09</DateText>
-        <DateText>2022.08.10</DateText>
+        <DateText>{checkInFullString}</DateText>
+        <DateText>{checkOutFullString}</DateText>
       </Contents>
       <Popup top={0} left={0} isOpen={isOpen} close={close}>
         <PopupTest>달력</PopupTest>

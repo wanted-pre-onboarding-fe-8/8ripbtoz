@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import useKeywordState from '../../../../hooks/useKeywordState';
 
 export default function Text() {
+  const { keyword, onChange } = useKeywordState();
+
   return (
     <Wrapper>
-      <SearchInput placeholder='지역명, 호텔명, 펜션명 검색' />
+      <SearchInput value={keyword} onChange={onChange} placeholder='지역명, 호텔명, 펜션명 검색' />
     </Wrapper>
   );
 }
