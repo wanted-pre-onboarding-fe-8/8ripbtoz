@@ -1,15 +1,12 @@
 import { atom } from 'recoil';
 import { addDays } from 'date-fns';
+import { IGuestCount, ISchedule } from '../types';
 
 export const keywordAtom = atom<string>({
   key: 'keywordAtom',
   default: '',
 });
 
-export interface ISchedule {
-  checkIn: Date | null;
-  checkOut: Date | null;
-}
 export const scheduleAtom = atom<ISchedule>({
   key: 'scheduleAtom',
   default: {
@@ -18,10 +15,6 @@ export const scheduleAtom = atom<ISchedule>({
   },
 });
 
-export interface IGuestCount {
-  adult: number;
-  child: number;
-}
 export const guestCountAtom = atom<IGuestCount>({
   key: 'guestCountAtom',
   default: {
