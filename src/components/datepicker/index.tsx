@@ -3,8 +3,7 @@ import { RESERVATION_MONTH_LIMIT } from '../../utils/constants/time';
 import { ISchedule } from '../../types';
 import { addMonths, isSameMonth, isBefore } from 'date-fns';
 import Header from './Header';
-import Weekdays from './Weekdays';
-import Body from './Body';
+import Calendar from './Calendar';
 import styled from 'styled-components';
 
 interface DatepickerProps {
@@ -16,6 +15,8 @@ function Datepicker({ checkInAndOut, onChangeDate }: DatepickerProps) {
   const today = new Date();
 
   const [currentMonth, setCurrentMonth] = React.useState(today);
+  const monthLeft = currentMonth;
+  const monthRight = addMonths(currentMonth, 1);
   const maxMonth = addMonths(today, RESERVATION_MONTH_LIMIT);
   const [isChevronActive, setIsChevronActive] = React.useState({
     prev: false,
@@ -98,8 +99,18 @@ function Datepicker({ checkInAndOut, onChangeDate }: DatepickerProps) {
         onClickPrevMonth={handleClickPrevMonth}
         onClickNextMonth={handleClickNextMonth}
       />
-      <Weekdays />
-      <Body month={currentMonth} checkInAndOut={checkInAndOut} onClickDate={handleClickDate} />
+      <Calendar
+        order={'left'}
+        month={monthLeft}
+        checkInAndOut={checkInAndOut}
+        onClickDate={handleClickDate}
+      />
+      <Calendar
+        order={'right'}
+        month={monthRight}
+        checkInAndOut={checkInAndOut}
+        onClickDate={handleClickDate}
+      />
     </Container>
   );
 }
@@ -107,6 +118,15 @@ function Datepicker({ checkInAndOut, onChangeDate }: DatepickerProps) {
 export default Datepicker;
 
 const Container = styled.section`
-  margin: 0 auto;
-  padding: 24px;
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 5px 20px 0px;
+  background-color: rgb(255, 255, 255);
+  z-index: 2;
+  top: 12px;
+  left: -282px;
+  padding: 46px;
+  width: 810px;
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
 `;

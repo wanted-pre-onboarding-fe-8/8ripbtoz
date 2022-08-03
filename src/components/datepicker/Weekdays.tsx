@@ -18,7 +18,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 24px 0;
 `;
 const Weekday = styled.div`
   width: 32px;
