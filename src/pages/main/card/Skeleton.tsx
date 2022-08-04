@@ -6,7 +6,7 @@ const skeletonRepeatCount = Array(10).fill(0);
 
 function CardSkeleton() {
   return (
-    <Container sx={{ boxShadow: 'rgb(94 94 94 / 10%) 0px 2px 4px 0px' }}>
+    <Container>
       <Empty />
       <Empty />
       <Empty />

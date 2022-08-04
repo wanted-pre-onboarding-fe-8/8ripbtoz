@@ -1,4 +1,3 @@
-import { IHotel } from '../types';
 import { generateReservationDateInfo } from './date';
 
 const LOCALSTORAGE_KEY = 'hotels';

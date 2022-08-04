@@ -55,19 +55,19 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 20px;
 `;
 
 const CardContainer = styled.div`
   max-width: 976px;
   width: 100%;
   margin: 0 auto;
-  background-color: #ededed;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: auto;
   grid-gap: 10px;
   place-items: center center;
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 976px) {
     grid-template-columns: 1fr;
   }
 `;
