@@ -62,7 +62,6 @@ const CardContainer = styled.div`
   max-width: 976px;
   width: 100%;
   margin: 0 auto;
-  background-color: #ededed;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: auto;
