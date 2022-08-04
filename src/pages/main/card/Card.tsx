@@ -20,7 +20,7 @@ function Card(props: IHotelCard) {
   };
 
   return (
-    <Container sx={{ boxShadow: 'rgb(94 94 94 / 10%) 0px 2px 4px 0px' }} disabled={reservation}>
+    <Container disabled={reservation}>
       <ImgWrapper>
         <Img src={mockImg} alt={hotelName} />
       </ImgWrapper>
