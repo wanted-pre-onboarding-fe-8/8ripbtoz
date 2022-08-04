@@ -11,7 +11,7 @@ export default function Main() {
   const [payload, setPayload] = React.useState<ISearchPayload>({ hotelName: '', max: 0 });
   const { checkInString, checkOutString } = useScheduleValue();
   const { ref, inView } = useInView();
-  const { data, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage } =
+  const { data, refetch, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage } =
     getInfiniteScroll(payload);
 
   useEffect(() => {
@@ -27,7 +27,13 @@ export default function Main() {
         {data?.pages.map((page) => (
           <React.Fragment key={page.pageParam}>
             {page.data.map((hotel: IHotel) => (
-              <Card key={hotel.id} {...hotel} checkIn={checkInString} checkOut={checkOutString} />
+              <Card
+                key={hotel.id}
+                {...hotel}
+                checkIn={checkInString}
+                checkOut={checkOutString}
+                refetch={refetch}
+              />
             ))}
           </React.Fragment>
         ))}
