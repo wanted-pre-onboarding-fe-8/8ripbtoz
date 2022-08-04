@@ -13,7 +13,7 @@ export default function FullSizePopup({ title, close, children }: IFullSizePopup
   const isMobile = useMediaQuery({ maxWidth: 480 });
 
   useEffect(() => {
-    disableScroll();
+    return disableScroll();
   }, []);
 
   return (
