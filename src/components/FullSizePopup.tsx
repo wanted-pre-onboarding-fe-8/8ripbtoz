@@ -1,0 +1,65 @@
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+
+interface IFullSizePopup {
+  title: string;
+  close: () => void;
+  children: JSX.Element;
+}
+
+export default function FullSizePopup({ title, close, children }: IFullSizePopup) {
+  useEffect(() => {
+    disableScroll();
+  }, []);
+
+  return (
+    <Wrapper>
+      <Header>
+        <Title>{title}</Title>
+        <CloseButtonWrapper onClick={close}>
+          <CloseRoundedIcon style={{ fontSize: '10vw' }} />
+        </CloseButtonWrapper>
+      </Header>
+      {children}
+    </Wrapper>
+  );
+}
+
+function disableScroll() {
+  document.body.style.cssText = `position: fixed; top: -${window.scrollY}px`;
+  return () => {
+    const scrollY = document.body.style.top;
+    document.body.style.cssText = 'position: ""; top: "";';
+    window.scrollTo(0, parseInt(scrollY || '0') * -1);
+  };
+}
+
+const Wrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 6vw 5vw 6vw 5vw;
+  border-bottom: 1px solid #eeeeee;
+`;
+
+const Title = styled.h1`
+  position: relative;
+  top: -1px;
+  font-size: 6vw;
+  font-weight: 600;
+`;
+
+const CloseButtonWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 5vw;
+  transform: translateY(-50%);
+  cursor: pointer;
+`;
