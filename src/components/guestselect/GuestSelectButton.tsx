@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { GUEST } from '../../utils/constants/guest';
-
 interface GuestSelectButtonProps {
   count: number;
   item: string;
@@ -38,7 +37,10 @@ export const ButtonGroup = [
   { key: 'increase', value: <AddIcon style={{ width: '10px', height: '10px' }} /> },
 ];
 
-const ButtonGroups = styled.span``;
+const ButtonGroups = styled.span`
+  margin: auto;
+  /* margin-right: 1rem; */
+`;
 
 const Button = styled.button<{ disabled?: boolean }>`
   background-color: #fff;
@@ -50,6 +52,7 @@ const Button = styled.button<{ disabled?: boolean }>`
   font-size: 14px;
   cursor: pointer;
   transition: opacity 0.7s;
+
   &:first-of-type {
     background-color: ${({ disabled }) => disabled && '#eaeaea'};
     opacity: ${({ disabled }) => disabled && '0.5'};
