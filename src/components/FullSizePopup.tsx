@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import styled from 'styled-components';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
@@ -9,6 +10,8 @@ interface IFullSizePopup {
 }
 
 export default function FullSizePopup({ title, close, children }: IFullSizePopup) {
+  const isMobile = useMediaQuery({ maxWidth: 480 });
+
   useEffect(() => {
     disableScroll();
   }, []);
@@ -18,7 +21,7 @@ export default function FullSizePopup({ title, close, children }: IFullSizePopup
       <Header>
         <Title>{title}</Title>
         <CloseButtonWrapper onClick={close}>
-          <CloseRoundedIcon style={{ fontSize: '10vw' }} />
+          <CloseRoundedIcon style={{ fontSize: isMobile ? '10vw' : '26px' }} />
         </CloseButtonWrapper>
       </Header>
       {children}
@@ -45,21 +48,33 @@ const Header = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  padding: 6vw 5vw 6vw 5vw;
+  padding: 18px;
   border-bottom: 1px solid #eeeeee;
+
+  @media screen and (max-width: 480px) {
+    padding: 6vw 5vw 6vw 5vw;
+  }
 `;
 
 const Title = styled.h1`
   position: relative;
   top: -1px;
-  font-size: 6vw;
+  font-size: 18px;
   font-weight: 600;
+
+  @media screen and (max-width: 480px) {
+    font-size: 6vw;
+  }
 `;
 
 const CloseButtonWrapper = styled.div`
   position: absolute;
   top: 50%;
-  right: 5vw;
+  right: 18px;
   transform: translateY(-50%);
   cursor: pointer;
+
+  @media screen and (max-width: 480x) {
+    right: 5vw;
+  }
 `;
