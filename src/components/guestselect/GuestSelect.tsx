@@ -3,10 +3,6 @@ import styled from 'styled-components';
 import { GUEST } from '../../utils/constants/guest';
 import { IGuestCount } from '../../types';
 import GuestSelectButton from './GuestSelectButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
 
 interface IGuestSelectProps {
   adult: number;
@@ -29,17 +25,17 @@ export default function GuestSelect({ adult, child, onChange }: IGuestSelectProp
 
   return (
     <Wrapper>
-      <ContainerHeader>인원 및 객실</ContainerHeader>
+      <Header>인원 및 객실</Header>
       <GuestOptions>
         <ListHeader>
           <ListHeaderText>객실 1</ListHeaderText>
         </ListHeader>
         {GuestItems?.map((GuestItem) => (
           <ListMainItem key={GuestItem.key}>
-            <ListItemText>
+            <ListItem>
               <ItemMainText>{GuestItem.key}</ItemMainText>
               <ItemSubText>{GuestItem.value}</ItemSubText>
-            </ListItemText>
+            </ListItem>
             <GuestSelectButton
               item={GuestItem.key}
               disabled={GuestItem.key === ADULT_KO ? adultDisabled : childDisabled}
@@ -60,12 +56,11 @@ const GuestItems = [
 
 const Wrapper = styled.section`
   width: 320px;
-  @media screen and (max-width: 480px) {
-    width: 480px;
-  }
+  box-sizing: border-box;
 `;
 
-const ContainerHeader = styled.div`
+const Header = styled.h2`
+  background-color: #fff;
   display: none;
   width: 100%;
   color: rgb(34, 34, 34);
@@ -74,28 +69,46 @@ const ContainerHeader = styled.div`
   font-weight: 500;
   text-align: center;
   padding: 1rem;
-  @media screen and (max-width: 480px) {
+  @media screen and (min-width: 320px) and (max-width: 480px) {
     display: block;
   }
-`;
-const GuestOptions = styled(List)`
-  box-shadow: rgb(0 0 0 / 20%) 0px 5px 20px 0px;
-  @media screen and (min-width: 480px) {
+  @media screen and (min-width: 481px) and (max-width: 767px) {
+    display: block;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    display: block;
+    width: 768px;
+    font-size: 18px;
   }
 `;
-const ListHeader = styled(ListSubheader)`
-  border-bottom: 1px solid rgb(238, 238, 238);
+const GuestOptions = styled.ul`
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: rgb(0 0 0 / 20%) 0px 5px 20px 0px;
 `;
-const ListHeaderText = styled.h3`
-  font-size: 1.2rem;
+const ListHeader = styled.li`
+  border-bottom: 1px solid rgb(238, 238, 238);
+  padding: 1rem;
+`;
+const ListHeaderText = styled.h2`
+  font-size: 1.1rem;
   font-weight: 700;
 `;
-const ListMainItem = styled(ListItem)`
+
+const ListMainItem = styled.li`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   color: rgb(34, 34, 34);
-  &:nth-last-child(1) {
-    border-bottom: 1px solid rgb(238, 238, 238);
-  }
+  padding: 1rem;
 `;
+const ListItem = styled.div`
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+`;
+
 const ItemMainText = styled.p`
   font-size: 1rem;
   color: rgb(34, 34, 34);
