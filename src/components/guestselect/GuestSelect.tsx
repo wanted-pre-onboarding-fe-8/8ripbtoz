@@ -27,9 +27,7 @@ export default function GuestSelect({ adult, child, onChange }: IGuestSelectProp
     <Wrapper>
       <Header>인원 및 객실</Header>
       <GuestOptions>
-        <ListHeader>
-          <ListHeaderText>객실 1</ListHeaderText>
-        </ListHeader>
+        <ListHeader>객실 1</ListHeader>
         {GuestItems?.map((GuestItem) => (
           <ListMainItem key={GuestItem.key}>
             <ListItem>
@@ -56,63 +54,63 @@ const GuestItems = [
 
 const Wrapper = styled.section`
   width: 320px;
-  box-sizing: border-box;
-  @media screen and (min-width: 320px) and (max-width: 480px) {
+  @media screen and (max-width: 480px) {
     width: 100vw;
+    h2 {
+      display: block;
+    }
   }
   @media screen and (min-width: 481px) and (max-width: 767px) {
     width: 100vw;
+    h2 {
+      display: block;
+    }
+    li {
+      padding: 6.6vw;
+      font-size: 3.8vw;
+    }
+    p {
+      font-size: 3.8vw;
+    }
   }
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     width: 768px;
     top: 0;
     left: 0;
     margin: auto;
-    box-shadow: rgb(0 0 0 / 20%) 20px 20px 20px 5px;
+    h2 {
+      display: block;
+      width: 768px;
+      font-size: 18px;
+    }
+  }
+  @media screen and (min-width: 1024px) {
+    box-shadow: rgb(0 0 0 / 20%) 0px 5px 20px 0px;
   }
 `;
 
 const Header = styled.h2`
   background-color: #fff;
+  border-bottom: 1px solid rgb(238, 238, 238);
   display: none;
   width: 100%;
   color: rgb(34, 34, 34);
   font-size: 5vw;
   line-height: 5vw;
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
   padding: 1rem;
-  @media screen and (min-width: 320px) and (max-width: 480px) {
-    display: block;
-  }
-  @media screen and (min-width: 481px) and (max-width: 767px) {
-    display: block;
-  }
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    display: block;
-    width: 768px;
-    font-size: 18px;
-  }
 `;
 const GuestOptions = styled.ul`
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  box-shadow: rgb(0 0 0 / 20%) 0px 5px 20px 0px;
 `;
 const ListHeader = styled.li`
   border-bottom: 1px solid rgb(238, 238, 238);
-  padding: 1rem;
-  @media screen and (min-width: 481px) and (max-width: 767px) {
-    padding: 6.6vw;
-  }
-`;
-const ListHeaderText = styled.h2`
   font-size: 1.1rem;
   font-weight: 700;
-  @media screen and (min-width: 481px) and (max-width: 767px) {
-    font-size: 3.8vw;
-  }
+  padding: 1rem;
 `;
 
 const ListMainItem = styled.li`
@@ -122,9 +120,6 @@ const ListMainItem = styled.li`
   color: rgb(34, 34, 34);
   padding: 1rem;
   font-size: 4.8vw;
-  @media screen and (min-width: 481px) and (max-width: 767px) {
-    padding: 6.6vw;
-  }
 `;
 const ListItem = styled.div`
   width: 100%;
@@ -135,13 +130,7 @@ const ListItem = styled.div`
 const ItemMainText = styled.p`
   font-size: 1rem;
   color: rgb(34, 34, 34);
-  @media screen and (min-width: 481px) and (max-width: 767px) {
-    font-size: 3.8vw;
-  }
 `;
 const ItemSubText = styled.p`
   font-size: 0.8rem;
-  @media screen and (min-width: 481px) and (max-width: 767px) {
-    font-size: 3.8vw;
-  }
 `;
