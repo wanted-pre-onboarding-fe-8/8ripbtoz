@@ -8,9 +8,13 @@ export interface IHotel {
 
 export type IHotels = IHotel[];
 
+import { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from '@tanstack/react-query';
 export interface IHotelCard extends IHotel {
   checkIn: string | null;
   checkOut: string | null;
+  refetch: <TPageData>(
+    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined,
+  ) => Promise<QueryObserverResult<unknown, unknown>>;
 }
 
 export interface ISearchPayload {
