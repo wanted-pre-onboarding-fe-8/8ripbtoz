@@ -57,6 +57,19 @@ const GuestItems = [
 const Wrapper = styled.section`
   width: 320px;
   box-sizing: border-box;
+  @media screen and (min-width: 320px) and (max-width: 480px) {
+    width: 100vw;
+  }
+  @media screen and (min-width: 481px) and (max-width: 767px) {
+    width: 100vw;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 768px;
+    top: 0;
+    left: 0;
+    margin: auto;
+    box-shadow: rgb(0 0 0 / 20%) 20px 20px 20px 5px;
+  }
 `;
 
 const Header = styled.h2`
@@ -90,10 +103,16 @@ const GuestOptions = styled.ul`
 const ListHeader = styled.li`
   border-bottom: 1px solid rgb(238, 238, 238);
   padding: 1rem;
+  @media screen and (min-width: 481px) and (max-width: 767px) {
+    padding: 6.6vw;
+  }
 `;
 const ListHeaderText = styled.h2`
   font-size: 1.1rem;
   font-weight: 700;
+  @media screen and (min-width: 481px) and (max-width: 767px) {
+    font-size: 3.8vw;
+  }
 `;
 
 const ListMainItem = styled.li`
@@ -102,6 +121,10 @@ const ListMainItem = styled.li`
   justify-content: space-between;
   color: rgb(34, 34, 34);
   padding: 1rem;
+  font-size: 4.8vw;
+  @media screen and (min-width: 481px) and (max-width: 767px) {
+    padding: 6.6vw;
+  }
 `;
 const ListItem = styled.div`
   width: 100%;
@@ -112,7 +135,13 @@ const ListItem = styled.div`
 const ItemMainText = styled.p`
   font-size: 1rem;
   color: rgb(34, 34, 34);
+  @media screen and (min-width: 481px) and (max-width: 767px) {
+    font-size: 3.8vw;
+  }
 `;
 const ItemSubText = styled.p`
   font-size: 0.8rem;
+  @media screen and (min-width: 481px) and (max-width: 767px) {
+    font-size: 3.8vw;
+  }
 `;
