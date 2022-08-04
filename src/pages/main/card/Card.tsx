@@ -1,16 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import { IHotelCard } from '../../../types';
+import { IHotel, IHotelCard } from '../../../types';
 import { setReservationHotel } from '../../../queries/hotel';
 import { setHotelItem } from '../../../utils/storage';
 import GridCard from './GridCard';
 
 function Card(props: IHotelCard) {
-  const { hotelName, reservation, base, max, id, checkIn, checkOut } = props;
-  const { mutate } = setReservationHotel();
+  const { hotelName, reservation, base, max, id, checkIn, checkOut, refetch } = props;
+  const { mutateAsync } = setReservationHotel();
 
-  const updateReservationStatus = (id: number) => {
-    mutate(id);
+  const updateReservationStatus = async (id: number) => {
+    await mutateAsync(id);
+    await refetch();
   };
 
   const handleClick = (id: number) => {

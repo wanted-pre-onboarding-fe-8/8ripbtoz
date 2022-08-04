@@ -1,25 +1,51 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Search from './search';
-import { ISearchPayload } from '../../types';
-import { getHotels } from '../../queries/hotel';
+import { IHotel, ISearchPayload } from '../../types';
+import { getInfiniteScroll } from '../../queries/hotel';
 import { Card, Skeleton } from './card';
 import useScheduleValue from '../../hooks/useScheduleValue';
+import { useInView } from 'react-intersection-observer';
 
 export default function Main() {
   const [payload, setPayload] = React.useState<ISearchPayload>({ hotelName: '', max: 0 });
-  const { data: hotels, isLoading } = getHotels(payload);
   const { checkInString, checkOutString } = useScheduleValue();
+  const { ref, inView } = useInView();
+  const { data, refetch, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage } =
+    getInfiniteScroll(payload);
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView]);
 
   return (
     <Wrapper>
       <Search setPayload={setPayload} />
       <CardContainer>
-        {hotels?.map((hotel) => (
-          <Card key={hotel.id} {...hotel} checkIn={checkInString} checkOut={checkOutString} />
+        {data?.pages.map((page) => (
+          <React.Fragment key={page.pageParam}>
+            {page.data.map((hotel: IHotel) => (
+              <Card
+                key={hotel.id}
+                {...hotel}
+                checkIn={checkInString}
+                checkOut={checkOutString}
+                refetch={refetch}
+              />
+            ))}
+          </React.Fragment>
         ))}
-        {isLoading && <Skeleton />}
+        {isFetching && <Skeleton />}
       </CardContainer>
+      <div>
+        <button
+          ref={ref}
+          onClick={() => fetchNextPage()}
+          disabled={!hasNextPage || isFetchingNextPage}
+        ></button>
+      </div>
     </Wrapper>
   );
 }

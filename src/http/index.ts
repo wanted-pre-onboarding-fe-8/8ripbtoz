@@ -10,8 +10,13 @@ class HttpClient {
     });
   }
 
+  delay(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   async get<T>(url: string) {
     const response: AxiosResponse<T> = await this.httpClient.get(url);
+    await this.delay(500);
     return response.data;
   }
 

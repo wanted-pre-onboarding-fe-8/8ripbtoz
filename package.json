@@ -26,6 +26,7 @@
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-intersection-observer": "^9.4.0",
     "react-query": "^4.0.0",
     "react-responsive": "^9.0.0-beta.10",
     "react-router-dom": "^6.3.0",
@@ -45,7 +46,7 @@
     "lint": "eslint src/**/*.{ts,tsx}",
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\" --config ./.prettierrc"
-   },
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
