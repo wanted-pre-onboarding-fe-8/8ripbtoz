@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import useScheduleState from '../../../../hooks/useScheduleState';
+import FullSizePopup from '../../../../components/FullSizePopup';
 import { usePopup, Popup } from '../Popup';
+import Datepicker from '../../../../components/datepicker';
 
 export default function Schedule() {
   const { isOpen, open, close } = usePopup();
-  const { checkInFullString, checkOutFullString, onChange } = useScheduleState();
+  const { checkInFullString, checkOutFullString, checkIn, checkOut, onChange } = useScheduleState();
 
   return (
     <Wrapper onMouseDown={open}>
@@ -15,7 +17,9 @@ export default function Schedule() {
       </Contents>
       {isOpen && (
         <Popup top={0} left={0} close={close}>
-          <PopupTest>달력</PopupTest>
+          <FullSizePopup title='일정' close={close}>
+            <p>달력</p>
+          </FullSizePopup>
         </Popup>
       )}
     </Wrapper>
@@ -43,10 +47,4 @@ const DateText = styled.p`
   @media screen and (min-width: 768px) {
     font-size: 12px;
   }
-`;
-
-const PopupTest = styled.div`
-  background-color: lightcoral;
-  width: 100vw;
-  height: 100vh;
 `;

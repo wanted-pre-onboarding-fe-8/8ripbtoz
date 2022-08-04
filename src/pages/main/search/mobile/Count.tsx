@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import useGuestCountState from '../../../../hooks/useGuestCountState';
-import GuestSelect from '../../../../components/guestselect/GuestSelect';
+import FullSizePopup from '../../../../components/FullSizePopup';
 import { usePopup, Popup } from '../Popup';
+import GuestSelect from '../../../../components/guestselect/GuestSelect';
 
 export default function Count() {
   const { isOpen, open, close } = usePopup();
@@ -22,9 +23,9 @@ export default function Count() {
       </Contents>
       {isOpen && (
         <Popup top={0} left={0} close={close}>
-          <PopupTest>
-            <GuestSelect adult={adult} child={child} onChange={onChange} />
-          </PopupTest>
+          <FullSizePopup title='인원 및 객실' close={close}>
+            <p>인원 및 객실</p>
+          </FullSizePopup>
         </Popup>
       )}
     </Wrapper>
@@ -69,10 +70,4 @@ const CountValue = styled.p`
   @media screen and (min-width: 768px) {
     font-size: 12px;
   }
-`;
-
-const PopupTest = styled.div`
-  background-color: lightcoral;
-  width: 100vw;
-  height: 100vh;
 `;
