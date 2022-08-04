@@ -38,7 +38,14 @@ export function Popup({ top, left, close, children }: IPopup) {
   };
 
   return (
-    <Wrapper ref={wrapperRef} tabIndex={0} top={top} left={left} onBlur={handleBlur}>
+    <Wrapper
+      ref={wrapperRef}
+      tabIndex={0}
+      top={top}
+      left={left}
+      onBlur={handleBlur}
+      isDesktop={isDesktop}
+    >
       {children}
     </Wrapper>
   );
@@ -47,8 +54,9 @@ export function Popup({ top, left, close, children }: IPopup) {
 const Wrapper = styled.div<{
   top: number;
   left: number;
+  isDesktop: boolean;
 }>`
-  position: absolute;
+  position: ${({ isDesktop }) => (isDesktop ? 'absolute' : 'fixed')};
   top: ${({ top }) => `${top}px`};
   left: ${({ left }) => `${left}px`};
   background-color: white;
