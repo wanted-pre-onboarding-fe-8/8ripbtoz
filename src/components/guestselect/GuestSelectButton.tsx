@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { GUEST } from '../../utils/constants/guest';
+import { GuestButtonTemplate } from './GuestTemplate';
+
 interface GuestSelectButtonProps {
   count: number;
   item: string;
@@ -38,36 +40,8 @@ export const ButtonGroup = [
   { key: 'decrease', value: <RemoveIcon style={{ width: 'auto', height: 'auto' }} /> },
   { key: 'increase', value: <AddIcon style={{ width: 'auto', height: 'auto' }} /> },
 ];
-const Container = styled.div`
-  display: flex;
-  margin: auto;
-  @media screen and (max-width: 480px) {
-    div {
-      width: 13vw;
-      height: 6vw;
-    }
-  }
-  @media screen and (min-width: 481px) and (max-width: 767px) {
-    button {
-      width: 6vw;
-      height: 6vw;
-    }
-    div {
-      width: 13vw;
-      height: 6vw;
-      font-size: 5vw;
-      line-height: 6vw;
-    }
-  }
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    div {
-      width: 6vw;
-      height: 3vw;
-      font-size: 2vw;
-      line-height: 3vw;
-    }
-  }
-`;
+const Container = styled(GuestButtonTemplate)``;
+
 const ButtonGroups = styled.span`
   display: flex;
 `;

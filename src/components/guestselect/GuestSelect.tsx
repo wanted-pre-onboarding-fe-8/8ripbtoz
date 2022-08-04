@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { GUEST } from '../../utils/constants/guest';
 import { IGuestCount } from '../../types';
+import { GuestWrapperTemplate } from './GuestTemplate';
 import GuestSelectButton from './GuestSelectButton';
 
 interface IGuestSelectProps {
@@ -46,48 +47,12 @@ export default function GuestSelect({ adult, child, onChange }: IGuestSelectProp
     </Wrapper>
   );
 }
-
 const GuestItems = [
   { key: '성인', value: '' },
   { key: '아이', value: '(0~17세)' },
 ];
 
-const Wrapper = styled.section`
-  width: 320px;
-  @media screen and (max-width: 480px) {
-    width: 100vw;
-    h2 {
-      display: block;
-    }
-  }
-  @media screen and (min-width: 481px) and (max-width: 767px) {
-    width: 100vw;
-    h2 {
-      display: block;
-    }
-    li {
-      padding: 6.6vw;
-      font-size: 3.8vw;
-    }
-    p {
-      font-size: 3.8vw;
-    }
-  }
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    width: 768px;
-    top: 0;
-    left: 0;
-    margin: auto;
-    h2 {
-      display: block;
-      width: 768px;
-      font-size: 18px;
-    }
-  }
-  @media screen and (min-width: 1024px) {
-    box-shadow: rgb(0 0 0 / 20%) 0px 5px 20px 0px;
-  }
-`;
+const Wrapper = styled(GuestWrapperTemplate)``;
 
 const Header = styled.h2`
   background-color: #fff;
@@ -129,6 +94,7 @@ const ListItem = styled.div`
 
 const ItemMainText = styled.p`
   font-size: 1rem;
+  font-weight: 500;
   color: rgb(34, 34, 34);
 `;
 const ItemSubText = styled.p`
