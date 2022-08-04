@@ -32,9 +32,7 @@ function Card(props: IHotelCard) {
           기준 {base}인 | 최대 {max}인
         </Typography>
       </Info>
-      <ReservationButton disabled={reservation} onClick={() => handleClick(id)}>
-        예약
-      </ReservationButton>
+      <ReservationButton disabled={reservation} onClick={() => handleClick(id)} />
     </Container>
   );
 }
@@ -43,12 +41,10 @@ export default Card;
 
 const mockImg = 'https://i.travelapi.com/hotels/1000000/30000/25000/24908/4a391ebd_b.jpg';
 const Container = styled(GridCard)<{ disabled: boolean }>`
-  color: ${({ disabled }) => (disabled ? 'lightGray' : 'inherit')};
-  filter: ${({ disabled }) => disabled && 'grayscale(100%)'};
-  opacity: ${({ disabled }) => disabled && '0.7'};
-  & > button {
-    cursor: ${({ disabled }) => disabled && 'default'};
+  & > * {
+    color: ${({ disabled }) => (disabled ? 'lightGray' : 'inherit')};
   }
+  opacity: ${({ disabled }) => disabled && '0.5'};
 `;
 
 const ImgWrapper = styled.div`
@@ -80,6 +76,9 @@ const Typography = styled.p<{ fontWeight?: string; fontSize?: string; color?: st
 `;
 
 const ReservationButton = styled.button`
+  &::before {
+    content: '예약';
+  }
   grid-area: button;
   background-color: #ff375c;
   border-radius: 5px;
@@ -88,4 +87,11 @@ const ReservationButton = styled.button`
   width: fit-content;
   justify-self: right;
   cursor: pointer;
+  &:disabled {
+    background-color: lightgray;
+    cursor: default;
+    &::before {
+      content: '마감';
+    }
+  }
 `;
