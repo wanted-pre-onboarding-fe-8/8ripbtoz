@@ -39,7 +39,6 @@ export const ButtonGroup = [
 
 const ButtonGroups = styled.span`
   margin: auto;
-  /* margin-right: 1rem; */
 `;
 
 const Button = styled.button<{ disabled?: boolean }>`
@@ -52,18 +51,27 @@ const Button = styled.button<{ disabled?: boolean }>`
   font-size: 14px;
   cursor: pointer;
   transition: opacity 0.7s;
-
   &:first-of-type {
     background-color: ${({ disabled }) => disabled && '#eaeaea'};
     opacity: ${({ disabled }) => disabled && '0.5'};
+  }
+  @media screen and (min-width: 481px) and (max-width: 767px) {
+    width: 6vw;
+    height: 6vw;
   }
 `;
 const Counter = styled.div`
   width: 1.5rem;
   height: 1.5rem;
-  font-size: 14px;
+  font-size: 1.1rem;
   font-weight: 700;
   justify-content: center;
   text-align: center;
   line-height: 1.5rem;
+  @media screen and (min-width: 481px) and (max-width: 767px) {
+    width: 13vw;
+    height: 5vw;
+    font-size: 5vw;
+    line-height: 5vw;
+  }
 `;
