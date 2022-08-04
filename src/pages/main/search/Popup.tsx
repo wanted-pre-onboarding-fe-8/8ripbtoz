@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import styled from 'styled-components';
 
 export function usePopup() {
@@ -29,8 +30,15 @@ export function Popup({ top, left, close, children }: IPopup) {
     }
   }, []);
 
+  const isDesktop = useMediaQuery({ minWidth: 1024 });
+  const handleBlur = () => {
+    if (isDesktop) {
+      close();
+    }
+  };
+
   return (
-    <Wrapper ref={wrapperRef} tabIndex={0} top={top} left={left} onBlur={() => close()}>
+    <Wrapper ref={wrapperRef} tabIndex={0} top={top} left={left} onBlur={handleBlur}>
       {children}
     </Wrapper>
   );
