@@ -17,28 +17,59 @@ export default function GuestSelectButton({ ...props }: GuestSelectButtonProps) 
   return (
     <>
       {ButtonGroup.map((button, index) => (
-        <ButtonGroups key={index} style={{ display: 'flex' }}>
-          <Button
-            name={button.key}
-            disabled={button.key === DECREASE && disabled}
-            onClick={() => handleChange(button.key, item)}
-          >
-            {button.value}
-          </Button>
+        <Container key={index}>
+          <ButtonGroups>
+            <Button
+              name={button.key}
+              disabled={button.key === DECREASE && disabled}
+              onClick={() => handleChange(button.key, item)}
+            >
+              {button.value}
+            </Button>
+          </ButtonGroups>
           {index === 1 ? <Counter style={{ display: 'none' }} /> : <Counter>{count}</Counter>}
-        </ButtonGroups>
+        </Container>
       ))}
     </>
   );
 }
 
 export const ButtonGroup = [
-  { key: 'decrease', value: <RemoveIcon style={{ width: '10px', height: '10px' }} /> },
-  { key: 'increase', value: <AddIcon style={{ width: '10px', height: '10px' }} /> },
+  { key: 'decrease', value: <RemoveIcon style={{ width: 'auto', height: 'auto' }} /> },
+  { key: 'increase', value: <AddIcon style={{ width: 'auto', height: 'auto' }} /> },
 ];
-
-const ButtonGroups = styled.span`
+const Container = styled.div`
+  display: flex;
   margin: auto;
+  @media screen and (max-width: 480px) {
+    div {
+      width: 13vw;
+      height: 6vw;
+    }
+  }
+  @media screen and (min-width: 481px) and (max-width: 767px) {
+    button {
+      width: 6vw;
+      height: 6vw;
+    }
+    div {
+      width: 13vw;
+      height: 6vw;
+      font-size: 5vw;
+      line-height: 6vw;
+    }
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    div {
+      width: 6vw;
+      height: 3vw;
+      font-size: 2vw;
+      line-height: 3vw;
+    }
+  }
+`;
+const ButtonGroups = styled.span`
+  display: flex;
 `;
 
 const Button = styled.button<{ disabled?: boolean }>`
@@ -50,14 +81,10 @@ const Button = styled.button<{ disabled?: boolean }>`
   color: #000;
   font-size: 14px;
   cursor: pointer;
-  transition: opacity 0.7s;
+  transition: opacity 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) 0s;
   &:first-of-type {
     background-color: ${({ disabled }) => disabled && '#eaeaea'};
     opacity: ${({ disabled }) => disabled && '0.5'};
-  }
-  @media screen and (min-width: 481px) and (max-width: 767px) {
-    width: 6vw;
-    height: 6vw;
   }
 `;
 const Counter = styled.div`
@@ -68,10 +95,4 @@ const Counter = styled.div`
   justify-content: center;
   text-align: center;
   line-height: 1.5rem;
-  @media screen and (min-width: 481px) and (max-width: 767px) {
-    width: 13vw;
-    height: 5vw;
-    font-size: 5vw;
-    line-height: 5vw;
-  }
 `;
