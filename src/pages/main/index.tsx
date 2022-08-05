@@ -18,7 +18,7 @@ export default function Main() {
     getInfiniteScroll(payload);
 
   useEffect(() => {
-    if (inView) {
+    if (inView && hasNextPage) {
       fetchNextPage();
     }
   }, [inView, isFetching]);
