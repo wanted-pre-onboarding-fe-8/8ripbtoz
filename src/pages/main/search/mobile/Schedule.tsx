@@ -19,7 +19,11 @@ export default function Schedule() {
       {isOpen && (
         <Popup top={-HEIGHT} left={0} close={close}>
           <FullSizePopup title='일정' close={close}>
-            <Datepicker checkInAndOut={{ checkIn, checkOut }} onChangeDate={onChange} />
+            <Datepicker
+              checkInAndOut={{ checkIn, checkOut }}
+              onChangeDate={onChange}
+              close={close}
+            />
           </FullSizePopup>
         </Popup>
       )}

@@ -8,12 +8,13 @@ import Calendar from './Calendar';
 
 interface DatepickerProps {
   checkInAndOut: ISchedule;
+  close?: () => void;
   onChangeDate: (checkInAndOut: ISchedule) => void;
 }
 
 type NavigationType = 'prev' | 'next';
 
-function Datepicker({ checkInAndOut, onChangeDate }: DatepickerProps) {
+function Datepicker({ checkInAndOut, close, onChangeDate }: DatepickerProps) {
   const today = new Date();
 
   const MONTH_RANGE = {
@@ -30,6 +31,11 @@ function Datepicker({ checkInAndOut, onChangeDate }: DatepickerProps) {
     };
 
     return navigationActions[direction]();
+  };
+
+  const handleChooseDateForMobile = () => {
+    onChangeDate(checkInAndOut);
+    close && close();
   };
 
   return (
@@ -53,6 +59,9 @@ function Datepicker({ checkInAndOut, onChangeDate }: DatepickerProps) {
           );
         })}
       </Inner>
+      <ButtonContainer>
+        <ChooseDateButton onClick={handleChooseDateForMobile}>선택</ChooseDateButton>
+      </ButtonContainer>
     </Container>
   );
 }
@@ -69,7 +78,6 @@ const Container = styled.section`
   background-color: #fff;
   @media screen and (max-width: 480px) {
     position: static;
-    height: 100vw;
   }
 `;
 
@@ -82,4 +90,23 @@ const Inner = styled.div`
     width: 100%;
     align-items: center;
   }
+`;
+const ButtonContainer = styled.div`
+  display: none;
+  background-color: #fff;
+  @media screen and (max-width: 480px) {
+    display: block;
+    width: 100%;
+    position: sticky;
+    bottom: 14px;
+  }
+`;
+
+const ChooseDateButton = styled.button`
+  width: 100%;
+  background-color: #ff375c;
+  font-size: 5vw;
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px;
 `;
