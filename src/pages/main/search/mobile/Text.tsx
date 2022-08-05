@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import useKeywordState from '../../../../hooks/useKeywordState';
 
 export default function Text() {
-  const { keyword, onChange } = useKeywordState();
+  const { keyword, onKeyUp } = useKeywordState();
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (inputRef.current) {
+      // inputRef.current.value = keyword;
+    }
+  }, [keyword]);
 
   return (
     <Wrapper>
-      <SearchInput value={keyword} onChange={onChange} placeholder='지역명, 호텔명, 펜션명 검색' />
+      <SearchInput ref={inputRef} onKeyUp={onKeyUp} placeholder='지역명, 호텔명, 펜션명 검색' />
     </Wrapper>
   );
 }
