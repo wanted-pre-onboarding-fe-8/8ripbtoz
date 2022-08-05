@@ -30,14 +30,10 @@ export default function Main() {
       <SearchWrapper isDown={isDown}>
         <Search setPayload={setPayload} />
       </SearchWrapper>
-
       {data?.pages.map((page, idx) => (
         <React.Fragment key={idx}>
-          {page.data.length === 0 && (
-            <div key={`noresult-${page.pageParam + idx}`}>검색 결과가 없습니다.</div>
-          )}
-          <CardContainer key={page.pageParam + idx}>
-            {page.data.map((hotel: IHotel) => (
+          <CardContainer key={page?.pageParam + idx}>
+            {page?.data.map((hotel: IHotel) => (
               <Card
                 key={hotel.id}
                 {...hotel}
