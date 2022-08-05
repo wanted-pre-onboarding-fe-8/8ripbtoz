@@ -55,11 +55,6 @@ export default function GuestSelect({ adult, child, onChange, close }: IGuestSel
     close();
   };
 
-  console.log(tempCount);
-  useEffect(() => {
-    console.log('temptCount', tempCount);
-  }, []);
-
   return (
     <Wrapper>
       <GuestOptions>
