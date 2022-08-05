@@ -28,9 +28,11 @@ export default function GuestSelect({ adult, child, onChange, close }: IGuestSel
   const { ADULT, CHILD, INCREASE, ADULT_KO } = GUEST;
   const adultDisabled = adult === 1;
   const childDisabled = child === 0;
+  const tempAdultDisabled = tempCount.adult === 1;
+  const tempChildDisabled = tempCount.child === 0;
 
   const onTempChange = (guestCount: IGuestTempCount) => {
-    setTemptCount(guestCount);
+    setTemptCount({ adult: guestCount.adult, child: guestCount.child });
   };
 
   const handleChange = (button: string, item: string) => {
@@ -42,7 +44,7 @@ export default function GuestSelect({ adult, child, onChange, close }: IGuestSel
       state[itemString] += value;
       onChange(state);
     } else {
-      const tempState: IGuestTempCount = { adult, child };
+      const tempState: IGuestTempCount = { adult: tempCount.adult, child: tempCount.child };
       tempState[itemString] += value;
       onTempChange(tempState);
     }
@@ -70,7 +72,15 @@ export default function GuestSelect({ adult, child, onChange, close }: IGuestSel
             </ListItem>
             <GuestSelectButton
               item={GuestItem.key}
-              disabled={GuestItem.key === ADULT_KO ? adultDisabled : childDisabled}
+              disabled={
+                isDesktop
+                  ? GuestItem.key === ADULT_KO
+                    ? adultDisabled
+                    : childDisabled
+                  : GuestItem.key === ADULT_KO
+                  ? tempAdultDisabled
+                  : tempChildDisabled
+              }
               count={GuestItem.key === ADULT_KO ? adult : child}
               tempCount={GuestItem.key === ADULT_KO ? tempCount.adult : tempCount.child}
               handleChange={handleChange}
