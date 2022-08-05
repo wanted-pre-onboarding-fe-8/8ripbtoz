@@ -1,4 +1,4 @@
-import { getDay } from 'date-fns';
+import { differenceInDays, getDay } from 'date-fns';
 import React from 'react';
 import styled from 'styled-components';
 import { IReservation } from '../../types';
@@ -12,6 +12,7 @@ export default function ReservationCard({ reservation }: ReservationCardProps) {
   const weekDay = getDay(new Date(reservation.reservation.date));
   const startDay = getDay(new Date(reservation.startDate));
   const endDay = getDay(new Date(reservation.endDate));
+  const nights = differenceInDays(new Date(reservation.endDate), new Date(reservation.startDate));
 
   return (
     <Card>
@@ -35,7 +36,7 @@ export default function ReservationCard({ reservation }: ReservationCardProps) {
             <span>
               {reservation.endDate} ({DISPLAY_WEEKDAYS[endDay]})
             </span>{' '}
-            | <span>1박</span>
+            | <span>{nights}박</span>
           </Schedule>
         </CardDetail>
       </CardContent>
