@@ -1,118 +1,67 @@
 import React from 'react';
-import { RESERVATION_MONTH_LIMIT } from '../../utils/constants/time';
 import { ISchedule } from '../../types';
-import { addMonths, isSameMonth, isBefore } from 'date-fns';
+import { RESERVATION_MONTH_LIMIT } from '../../utils/constants/time';
+import { addMonths, subMonths, eachMonthOfInterval, isSameMonth } from 'date-fns';
+import styled from 'styled-components';
 import Navigation from './Navigation';
 import Calendar from './Calendar';
-import styled from 'styled-components';
 
 interface DatepickerProps {
   checkInAndOut: ISchedule;
+  close?: () => void;
   onChangeDate: (checkInAndOut: ISchedule) => void;
 }
 
-function Datepicker({ checkInAndOut, onChangeDate }: DatepickerProps) {
+type NavigationType = 'prev' | 'next';
+
+function Datepicker({ checkInAndOut, close, onChangeDate }: DatepickerProps) {
   const today = new Date();
-  const { checkIn } = checkInAndOut;
-  const [currentMonth, setCurrentMonth] = React.useState(checkIn);
-  const monthLeft = currentMonth;
-  const monthRight = addMonths(currentMonth, 1);
-  const maxMonth = addMonths(today, RESERVATION_MONTH_LIMIT);
-  const [isChevronActive, setIsChevronActive] = React.useState({
-    prev: false,
-    next: true,
-  });
 
-  React.useEffect(() => {
-    const setActivation = (date: Date) => {
-      const activation = {
-        prev: !isSameMonth(today, date),
-        next: !isSameMonth(maxMonth, date),
-      };
-
-      setIsChevronActive(activation);
-    };
-
-    setActivation(currentMonth);
-  }, [currentMonth]);
-
-  const handleClickPrevMonth = () => {
-    const isEarliestMonth = (date: Date) => {
-      return isSameMonth(date, today);
-    };
-
-    if (isEarliestMonth(currentMonth)) {
-      return;
-    }
-
-    setCurrentMonth(addMonths(currentMonth, -1));
+  const MONTH_RANGE = {
+    start: today,
+    end: addMonths(today, RESERVATION_MONTH_LIMIT),
   };
 
-  const handleClickNextMonth = () => {
-    const isMaxMonth = (date: Date) => {
-      return isSameMonth(date, maxMonth);
+  const [displayBaseMonth, setCurrentMonth] = React.useState(today);
+
+  const handleNavigationClick = (direction: NavigationType) => {
+    const navigationActions = {
+      prev: () => setCurrentMonth(subMonths(displayBaseMonth, 1)),
+      next: () => setCurrentMonth(addMonths(displayBaseMonth, 1)),
     };
 
-    if (isMaxMonth(currentMonth)) {
-      return;
-    }
-
-    setCurrentMonth(addMonths(currentMonth, 1));
+    return navigationActions[direction]();
   };
 
-  const handleClickDate = (date: Date) => {
-    const { checkIn, checkOut } = checkInAndOut;
-    const isAnotherDay = checkIn && checkOut;
-    const isCheckOutEmpty = !checkOut;
-    const isNewDayBeforeCheckIn = checkIn && isBefore(date, checkIn);
-
-    const setNewCheckIn = () =>
-      onChangeDate({
-        checkIn: date,
-        checkOut: null,
-      });
-
-    const setNewCheckOut = () =>
-      onChangeDate({
-        ...checkInAndOut,
-        checkOut: date,
-      });
-
-    if (isAnotherDay) {
-      setNewCheckIn();
-    }
-
-    if (isCheckOutEmpty) {
-      setNewCheckOut();
-    }
-
-    if (isNewDayBeforeCheckIn) {
-      setNewCheckIn();
-    }
-
-    setCurrentMonth(date);
+  const handleChooseDateForMobile = () => {
+    onChangeDate(checkInAndOut);
+    close && close();
   };
 
   return (
     <Container>
-      <Navigation
-        currentMonth={currentMonth}
-        isActive={isChevronActive}
-        onClickPrevMonth={handleClickPrevMonth}
-        onClickNextMonth={handleClickNextMonth}
-      />
-      <Calendar
-        order={'left'}
-        month={monthLeft}
-        checkInAndOut={checkInAndOut}
-        onClickDate={handleClickDate}
-      />
-      <Calendar
-        order={'right'}
-        month={monthRight}
-        checkInAndOut={checkInAndOut}
-        onClickDate={handleClickDate}
-      />
+      <Navigation month={displayBaseMonth} onNavigationClick={handleNavigationClick} />
+      <Inner>
+        {eachMonthOfInterval(MONTH_RANGE).map((month) => {
+          const isDisplayTarget = () => {
+            if (isSameMonth(month, displayBaseMonth)) return 'left';
+            if (isSameMonth(subMonths(month, 1), displayBaseMonth)) return 'right';
+            return 'none';
+          };
+          return (
+            <Calendar
+              key={month.toString()}
+              isDisplayTarget={isDisplayTarget()}
+              month={month}
+              checkInAndOut={checkInAndOut}
+              onChangeDate={onChangeDate}
+            />
+          );
+        })}
+      </Inner>
+      <ButtonContainer>
+        <ChooseDateButton onClick={handleChooseDateForMobile}>선택</ChooseDateButton>
+      </ButtonContainer>
     </Container>
   );
 }
@@ -120,15 +69,44 @@ function Datepicker({ checkInAndOut, onChangeDate }: DatepickerProps) {
 export default Datepicker;
 
 const Container = styled.section`
+  position: absolute;
+  top: 0;
+  z-index: 2;
   border-radius: 4px;
   box-shadow: rgb(0 0 0 / 20%) 0px 5px 20px 0px;
-  background-color: rgb(255, 255, 255);
-  z-index: 2;
-  top: 0;
-  left: -282px;
-  padding: 46px;
-  width: 810px;
-  position: absolute;
+  padding: 28px;
+  background-color: #fff;
+  @media screen and (max-width: 480px) {
+    position: static;
+  }
+`;
+
+const Inner = styled.div`
+  width: 544px;
   display: flex;
-  flex-wrap: wrap;
+  overflow-x: hidden;
+  @media screen and (max-width: 480px) {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+`;
+const ButtonContainer = styled.div`
+  display: none;
+  background-color: #fff;
+  @media screen and (max-width: 480px) {
+    display: block;
+    width: 100%;
+    position: sticky;
+    bottom: 14px;
+  }
+`;
+
+const ChooseDateButton = styled.button`
+  width: 100%;
+  background-color: #ff375c;
+  font-size: 5vw;
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px;
 `;

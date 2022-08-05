@@ -1,53 +1,75 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
+import { isSameMonth, addMonths } from 'date-fns';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
+import { RESERVATION_MONTH_LIMIT } from '../../utils/constants/time';
 import styled from 'styled-components';
 
 interface NavigationProps {
-  currentMonth: Date;
-  isActive: {
-    prev: boolean;
-    next: boolean;
-  };
-  onClickPrevMonth: () => void;
-  onClickNextMonth: () => void;
+  month: Date;
+  onNavigationClick: (direction: 'prev' | 'next') => void;
 }
 
-function Navigation({ isActive, onClickPrevMonth, onClickNextMonth }: NavigationProps) {
-  const { prev, next } = isActive;
+function Navigation({ month, onNavigationClick }: NavigationProps) {
+  const today = new Date();
+
+  const isEarliestMonth = isSameMonth(month, today);
+  if (isEarliestMonth) {
+    return (
+      <Container>
+        <InactiveIcon>
+          <PrevIcon />
+        </InactiveIcon>
+        <NextIcon onClick={() => onNavigationClick('next')} />
+      </Container>
+    );
+  }
+
+  const weDisplayTwoCalendars = addMonths(today, RESERVATION_MONTH_LIMIT - 1);
+  const isFurthestMonth = isSameMonth(month, weDisplayTwoCalendars);
+  if (isFurthestMonth) {
+    return (
+      <Container>
+        <PrevIcon onClick={() => onNavigationClick('prev')} />
+        <InactiveIcon>
+          <NextIcon />
+        </InactiveIcon>
+      </Container>
+    );
+  }
+
   return (
     <Container>
-      <ChevronLeftIcon active={prev} onClick={onClickPrevMonth} />
-      <ChevronRightIcon active={next} onClick={onClickNextMonth} />
+      <PrevIcon onClick={() => onNavigationClick('prev')} />
+      <NextIcon onClick={() => onNavigationClick('next')} />
     </Container>
   );
 }
 
 export default Navigation;
 
-const Container = styled.header`
+const Container = styled.div`
   width: 100%;
   position: absolute;
   left: 0px;
-  padding: 0px 46px;
+  padding: 0px 48px;
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
 `;
-
-const ChevronLeftIcon = styled(({ active, ...parentProps }) => <ChevronLeft {...parentProps} />)<{
-  active: boolean;
-}>`
-  color: ${({ active }) => (active ? '#000' : '#ccc')};
+const PrevIcon = styled(ChevronLeft)`
   cursor: pointer;
   position: relative;
-  left: 12px;
   float: left;
+  top: 19px;
+  left: 28px;
 `;
-
-const ChevronRightIcon = styled(({ active, ...parentProps }) => <ChevronRight {...parentProps} />)<{
-  active: boolean;
-}>`
-  color: ${({ active }) => (active ? '#000' : '#ccc')};
+const NextIcon = styled(ChevronRight)`
   cursor: pointer;
   position: relative;
-  right: 12px;
   float: right;
+  top: 19px;
+  right: 28px;
+`;
+const InactiveIcon = styled.span`
+  color: #ccc;
 `;

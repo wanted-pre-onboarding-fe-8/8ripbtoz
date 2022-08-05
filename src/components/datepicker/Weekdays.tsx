@@ -4,24 +4,34 @@ import styled from 'styled-components';
 
 function Weekdays() {
   return (
-    <Container>
-      {DISPLAY_WEEKDAYS.map((day) => {
-        return <Weekday key={day}>{day}</Weekday>;
+    <WeekdayRow>
+      {DISPLAY_WEEKDAYS.map((weekday) => {
+        return <Weekday key={weekday}>{weekday}</Weekday>;
       })}
-    </Container>
+    </WeekdayRow>
   );
 }
 
 export default Weekdays;
 
-const Container = styled.div`
-  margin-top: 8px;
+const WeekdayRow = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 `;
+
 const Weekday = styled.div`
-  flex: 1;
+  width: calc(100vw / 7);
   text-align: center;
-  text-align: center;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-size: 18px;
+  @media screen and (max-width: 480px) {
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: unset;
+  }
 `;
