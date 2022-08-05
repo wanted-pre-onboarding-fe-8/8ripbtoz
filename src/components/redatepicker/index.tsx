@@ -1,14 +1,17 @@
 import React from 'react';
 import { ISchedule } from '../../types';
 import { RESERVATION_MONTH_LIMIT } from '../../utils/constants/time';
-import { addMonths, eachMonthOfInterval } from 'date-fns';
+import { addMonths, subMonths, eachMonthOfInterval, isSameMonth } from 'date-fns';
 import styled from 'styled-components';
+import Navigation from './Navigation';
 import Calendar from './Calendar';
 
 interface DatepickerProps {
   checkInAndOut: ISchedule;
   onChangeDate: (checkInAndOut: ISchedule) => void;
 }
+
+type NavigationType = 'prev' | 'next';
 
 function Datepicker({ checkInAndOut, onChangeDate }: DatepickerProps) {
   const today = new Date();
@@ -18,18 +21,38 @@ function Datepicker({ checkInAndOut, onChangeDate }: DatepickerProps) {
     end: addMonths(today, RESERVATION_MONTH_LIMIT),
   };
 
+  const [displayBaseMonth, setCurrentMonth] = React.useState(today);
+
+  const handleNavigationClick = (direction: NavigationType) => {
+    const navigationActions = {
+      prev: () => setCurrentMonth(subMonths(displayBaseMonth, 1)),
+      next: () => setCurrentMonth(addMonths(displayBaseMonth, 1)),
+    };
+
+    return navigationActions[direction]();
+  };
+
   return (
     <Container>
-      {eachMonthOfInterval(MONTH_RANGE).map((month) => {
-        return (
-          <Calendar
-            key={month.toString()}
-            month={month}
-            checkInAndOut={checkInAndOut}
-            onChangeDate={onChangeDate}
-          />
-        );
-      })}
+      <Navigation month={displayBaseMonth} onNavigationClick={handleNavigationClick} />
+      <Inner>
+        {eachMonthOfInterval(MONTH_RANGE).map((month) => {
+          const isDisplayTarget = () => {
+            if (isSameMonth(month, displayBaseMonth)) return 'left';
+            if (isSameMonth(subMonths(month, 1), displayBaseMonth)) return 'right';
+            return 'none';
+          };
+          return (
+            <Calendar
+              key={month.toString()}
+              isDisplayTarget={isDisplayTarget()}
+              month={month}
+              checkInAndOut={checkInAndOut}
+              onChangeDate={onChangeDate}
+            />
+          );
+        })}
+      </Inner>
     </Container>
   );
 }
@@ -37,15 +60,16 @@ function Datepicker({ checkInAndOut, onChangeDate }: DatepickerProps) {
 export default Datepicker;
 
 const Container = styled.section`
+  position: absolute;
+  top: 0;
+  z-index: 2;
   border-radius: 4px;
   box-shadow: rgb(0 0 0 / 20%) 0px 5px 20px 0px;
-  background-color: rgb(255, 255, 255);
-  z-index: 2;
-  top: 0;
-  /* left: -282px; */
-  padding: 46px;
-  width: 810px;
-  position: absolute;
+  padding: 48px;
+`;
+
+const Inner = styled.div`
+  width: 544px;
   display: flex;
-  flex-wrap: wrap;
+  overflow-x: hidden;
 `;

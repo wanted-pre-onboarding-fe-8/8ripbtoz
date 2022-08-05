@@ -16,11 +16,12 @@ import Day from './Day';
 
 interface CalendarProps {
   month: Date;
+  isDisplayTarget: 'left' | 'right' | 'none';
   checkInAndOut: ISchedule;
   onChangeDate: (checkInAndOut: ISchedule) => void;
 }
 
-function Calendar({ month, checkInAndOut, onChangeDate }: CalendarProps) {
+function Calendar({ month, isDisplayTarget, checkInAndOut, onChangeDate }: CalendarProps) {
   const sundaysOfTheMonth = eachWeekOfInterval({
     start: startOfMonth(month),
     end: endOfMonth(month),
@@ -66,7 +67,7 @@ function Calendar({ month, checkInAndOut, onChangeDate }: CalendarProps) {
   };
 
   return (
-    <Container>
+    <Container isDisplayTarget={isDisplayTarget}>
       <YearAndMonth>{format(month, 'yyyy년 M월')}</YearAndMonth>
       <Weekdays />
       <DateSection>
@@ -95,11 +96,27 @@ function Calendar({ month, checkInAndOut, onChangeDate }: CalendarProps) {
 
 export default Calendar;
 
-const Container = styled.section`
+interface ContainerProps {
+  isDisplayTarget: 'left' | 'right' | 'none';
+}
+const Container = styled.section<ContainerProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 24px;
+  width: 272px;
+
+  ${({ isDisplayTarget }) => {
+    if (isDisplayTarget === 'left') {
+      return 'order: 1;';
+    }
+    if (isDisplayTarget === 'right') {
+      return 'order: 2;';
+    }
+    if (isDisplayTarget === 'none') {
+      return 'order: 3;';
+    }
+  }}
 `;
 
 const YearAndMonth = styled.span``;
