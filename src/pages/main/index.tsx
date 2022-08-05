@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import Search from './search';
 import { IHotel, ISearchPayload } from '../../types';
 import { getInfiniteScroll } from '../../queries/hotel';
-import { Card, Skeleton } from './card';
-import useScheduleValue from '../../hooks/useScheduleValue';
 import { useInView } from 'react-intersection-observer';
+import useScheduleValue from '../../hooks/useScheduleValue';
+import { Card, Skeleton } from './card';
+import { CardContainer } from './card/CardContainer';
 import { HEIGHT } from '../../utils/constants/header';
 import useScrollDirection from '../../hooks/useScrollDirection';
 
@@ -29,9 +30,13 @@ export default function Main() {
       <SearchWrapper isDown={isDown}>
         <Search setPayload={setPayload} />
       </SearchWrapper>
-      <CardContainer>
-        {data?.pages.map((page) => (
-          <React.Fragment key={page.pageParam}>
+
+      {data?.pages.map((page, idx) => (
+        <React.Fragment key={idx}>
+          {page.data.length === 0 && (
+            <div key={`noresult-${page.pageParam + idx}`}>검색 결과가 없습니다.</div>
+          )}
+          <CardContainer key={page.pageParam + idx}>
             {page.data.map((hotel: IHotel) => (
               <Card
                 key={hotel.id}
@@ -41,10 +46,11 @@ export default function Main() {
                 refetch={refetch}
               />
             ))}
-          </React.Fragment>
-        ))}
-        {isFetching && <Skeleton />}
-      </CardContainer>
+          </CardContainer>
+        </React.Fragment>
+      ))}
+      {isFetching && <Skeleton />}
+
       <div>
         <button
           ref={ref}
@@ -76,18 +82,4 @@ const SearchWrapper = styled.div<{ isDown: boolean }>`
   padding-bottom: 20px;
   transition: transform 1s;
   transform: translateY(${({ isDown }) => (isDown ? `${-HEIGHT * 2}px` : '0px')});
-`;
-
-const CardContainer = styled.div`
-  max-width: 976px;
-  width: 100%;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-auto-rows: auto;
-  grid-gap: 10px;
-  place-items: center center;
-  @media screen and (max-width: 976px) {
-    grid-template-columns: 1fr;
-  }
 `;
