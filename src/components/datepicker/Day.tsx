@@ -68,6 +68,12 @@ const Container = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  @media screen and (max-width: 480px) {
+    width: calc(100vw / 7);
+    aspect-ratio: 1/1;
+    height: unset;
+    font-size: 18px;
+  }
 `;
 
 const CheckDay = styled(Container)`
@@ -111,4 +117,7 @@ const RedDot = styled.div`
   bottom: 4px;
   left: 50%;
   transform: translate(-50%, 0);
+  @media screen and (max-width: 480px) {
+    bottom: 20%;
+  }
 `;

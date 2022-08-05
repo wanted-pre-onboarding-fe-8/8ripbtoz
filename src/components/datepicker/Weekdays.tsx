@@ -22,8 +22,16 @@ const WeekdayRow = styled.div`
 `;
 
 const Weekday = styled.div`
-  width: calc(100% / 7);
+  width: calc(100vw / 7);
   text-align: center;
   margin-top: 8px;
   margin-bottom: 8px;
+  font-size: 18px;
+  @media screen and (max-width: 480px) {
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: unset;
+  }
 `;

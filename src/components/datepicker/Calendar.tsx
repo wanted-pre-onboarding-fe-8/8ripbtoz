@@ -117,9 +117,18 @@ const Container = styled.section<ContainerProps>`
       return 'order: 3;';
     }
   }}
+
+  @media screen and (max-width: 480px) {
+    width: 100vw;
+    aspect-ratio: 1/1;
+  }
 `;
 
-const YearAndMonth = styled.span``;
+const YearAndMonth = styled.span`
+  @media screen and (max-width: 480px) {
+    font-size: 24px;
+  }
+`;
 
 const DateSection = styled.section`
   width: 100%;
@@ -134,4 +143,9 @@ const Week = styled.div`
 const EmptyDay = styled.div`
   width: 32px;
   height: 32px;
+  @media screen and (max-width: 480px) {
+    width: calc(100vw / 7);
+    aspect-ratio: 1/1;
+    height: unset;
+  }
 `;

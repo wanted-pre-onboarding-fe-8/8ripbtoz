@@ -52,6 +52,9 @@ const Container = styled.div`
   position: absolute;
   left: 0px;
   padding: 0px 48px;
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
 `;
 const PrevIcon = styled(ChevronLeft)`
   cursor: pointer;

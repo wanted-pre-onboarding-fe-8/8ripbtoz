@@ -67,10 +67,19 @@ const Container = styled.section`
   box-shadow: rgb(0 0 0 / 20%) 0px 5px 20px 0px;
   padding: 28px;
   background-color: #fff;
+  @media screen and (max-width: 480px) {
+    position: static;
+    height: 100vw;
+  }
 `;
 
 const Inner = styled.div`
   width: 544px;
   display: flex;
   overflow-x: hidden;
+  @media screen and (max-width: 480px) {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
 `;
