@@ -7,7 +7,7 @@ const GuestSelectButtonTemplate = styled.div`
   width: 100vw;
   left: 0;
   position: fixed;
-  padding: 1rem;
+  /* padding: 5vw; */
 `;
 
 const GuestSelectWrapperTemplate = styled.section`
