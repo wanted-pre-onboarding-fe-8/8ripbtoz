@@ -6,6 +6,7 @@ import { getInfiniteScroll } from '../../queries/hotel';
 import { Card, Skeleton } from './card';
 import useScheduleValue from '../../hooks/useScheduleValue';
 import { useInView } from 'react-intersection-observer';
+import { HEIGHT } from '../../utils/constants/header';
 import useScrollDirection from '../../hooks/useScrollDirection';
 
 export default function Main() {
@@ -63,20 +64,18 @@ const Wrapper = styled.div`
   gap: 20px;
 `;
 
-const HEADER_HEIGHT = 84;
-
 const SearchWrapper = styled.div<{ isDown: boolean }>`
   width: 100%;
   display: flex;
   justify-content: center;
   position: sticky;
-  top: ${`${HEADER_HEIGHT}px`};
+  top: ${`${HEIGHT}px`};
   background-color: white;
   z-index: 2;
   border-bottom: 1px solid #eeeeee;
   padding-bottom: 20px;
   transition: transform 1s;
-  transform: translateY(${({ isDown }) => (isDown ? `${-HEADER_HEIGHT * 2}px` : '0px')});
+  transform: translateY(${({ isDown }) => (isDown ? `${-HEIGHT * 2}px` : '0px')});
 `;
 
 const CardContainer = styled.div`

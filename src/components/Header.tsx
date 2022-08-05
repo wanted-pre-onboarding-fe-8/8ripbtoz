@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useScrollDirection from '../hooks/useScrollDirection';
+import { HEIGHT } from '../utils/constants/header';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -19,8 +20,6 @@ export default function Header() {
   );
 }
 
-const HEADER_HEIGHT = 84;
-
 const Wrapper = styled.div<{ isDown: boolean }>`
   width: 100%;
   position: sticky;
@@ -28,11 +27,11 @@ const Wrapper = styled.div<{ isDown: boolean }>`
   background-color: white;
   z-index: 2;
   transition: transform 1s;
-  transform: translateY(${({ isDown }) => (isDown ? `${-HEADER_HEIGHT}px` : '0px')});
+  transform: translateY(${({ isDown }) => (isDown ? `${-HEIGHT}px` : '0px')});
 `;
 
 const HeaderWrapper = styled.header`
-  height: ${`${HEADER_HEIGHT}px`};
+  height: ${`${HEIGHT}px`};
   @media (max-width: 1024px) {
     margin: 0 30px;
   }
