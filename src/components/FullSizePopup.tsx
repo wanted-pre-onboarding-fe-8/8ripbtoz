@@ -52,6 +52,7 @@ const Header = styled.div`
 
   @media screen and (max-width: 480px) {
     padding: 6vw 5vw 6vw 5vw;
+    height: 64px;
   }
 `;
 

@@ -78,8 +78,7 @@ const Container = styled.section`
   background-color: #fff;
   @media screen and (max-width: 480px) {
     position: static;
-
-    height: 90vh;
+    height: calc(100vh - 64px);
     overflow: auto;
   }
 `;
