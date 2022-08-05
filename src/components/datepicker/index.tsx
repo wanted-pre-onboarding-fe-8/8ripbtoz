@@ -98,8 +98,8 @@ const ButtonContainer = styled.div`
   background-color: #fff;
   @media screen and (max-width: 480px) {
     display: block;
-    width: 50%;
-    position: absolute;
+    width: 100%;
+    position: sticky;
     bottom: 14px;
   }
 `;
