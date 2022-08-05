@@ -6,6 +6,7 @@ import { getInfiniteScroll } from '../../queries/hotel';
 import { Card, Skeleton } from './card';
 import useScheduleValue from '../../hooks/useScheduleValue';
 import { useInView } from 'react-intersection-observer';
+import useScrollDirection from '../../hooks/useScrollDirection';
 
 export default function Main() {
   const [payload, setPayload] = React.useState<ISearchPayload>({ hotelName: '', max: 0 });
@@ -20,9 +21,11 @@ export default function Main() {
     }
   }, [inView]);
 
+  const isDown = useScrollDirection();
+
   return (
     <Wrapper>
-      <SearchWrapper>
+      <SearchWrapper isDown={isDown}>
         <Search setPayload={setPayload} />
       </SearchWrapper>
       <CardContainer>
@@ -60,16 +63,20 @@ const Wrapper = styled.div`
   gap: 20px;
 `;
 
-const SearchWrapper = styled.div`
+const HEADER_HEIGHT = 84;
+
+const SearchWrapper = styled.div<{ isDown: boolean }>`
   width: 100%;
   display: flex;
   justify-content: center;
   position: sticky;
-  top: 84px;
+  top: ${`${HEADER_HEIGHT}px`};
   background-color: white;
   z-index: 2;
   border-bottom: 1px solid #eeeeee;
   padding-bottom: 20px;
+  transition: transform 1s;
+  transform: translateY(${({ isDown }) => (isDown ? `${-HEADER_HEIGHT * 2}px` : '0px')});
 `;
 
 const CardContainer = styled.div`
