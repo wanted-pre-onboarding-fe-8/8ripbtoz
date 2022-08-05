@@ -1,5 +1,6 @@
 import { useRecoilState } from 'recoil';
 import { keywordAtom } from '../store/searchAtom';
+import { debounce } from '../utils/optimization';
 
 export default function useKeywordState() {
   const [keyword, setKeword] = useRecoilState(keywordAtom);
@@ -8,5 +9,10 @@ export default function useKeywordState() {
     setKeword(e.target.value);
   };
 
-  return { keyword, onChange };
+  const debouncedSet = debounce<string>((value) => setKeword(value));
+  const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    debouncedSet(e.target.value);
+  };
+
+  return { keyword, onChange, onKeyUp };
 }
