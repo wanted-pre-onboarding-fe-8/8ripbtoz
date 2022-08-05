@@ -1,16 +1,34 @@
 import styled from 'styled-components';
 
 const GuestSelectButtonTemplate = styled.div`
-  background-color: #fff;
-  border-top: 1px solid rgb(238, 238, 238);
   display: none;
-  width: 100vw;
-  left: 0;
-  position: fixed;
+  background-color: #fff;
+  width: 100%;
+  bottom: 0;
+  position: absolute;
+  margin: auto;
+  padding: 6.3vw 6.6vw 6.6vw;
+  @media screen and (max-width: 480px) {
+    button {
+      font-size: 5vw;
+    }
+  }
+  @media screen and (min-width: 481px) and (max-width: 767px) {
+    button {
+      font-size: 5vw;
+    }
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    button {
+      font-size: 18px;
+    }
+  }
 `;
 
 const GuestSelectWrapperTemplate = styled.section`
   width: 320px;
+  min-height: 100%;
+  background-color: rgb(238, 238, 238);
   @media screen and (max-width: 480px) {
     width: 100vw;
     ${GuestSelectButtonTemplate} {
@@ -22,6 +40,8 @@ const GuestSelectWrapperTemplate = styled.section`
   }
   @media screen and (min-width: 481px) and (max-width: 767px) {
     width: 100vw;
+    min-height: 100%;
+
     ${GuestSelectButtonTemplate} {
       display: block;
     }

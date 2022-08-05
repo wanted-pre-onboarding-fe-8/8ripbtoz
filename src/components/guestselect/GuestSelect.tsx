@@ -95,6 +95,7 @@ const GuestItems = [
 ];
 
 const Wrapper = styled(GuestSelectWrapperTemplate)``;
+const ButtonContainer = styled(GuestSelectButtonTemplate)``;
 
 const GuestOptions = styled.ul`
   display: flex;
@@ -131,18 +132,11 @@ const ItemSubText = styled.p`
   font-size: 0.8rem;
 `;
 
-const ButtonContainer = styled(GuestSelectButtonTemplate)``;
-
 const Button = styled.button`
-  background-color: rgb(255, 55, 92);
-  font-weight: 500;
-  color: rgb(255, 255, 255);
-  justify-content: center;
-  width: 100vw;
-  height: 10vw;
+  width: 100%;
+  background-color: #ff375c;
   font-size: 5vw;
-  border-radius: 5px;
-  position: absolute;
-  cursor: pointer;
-  box-sizing: border-box;
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px;
 `;
