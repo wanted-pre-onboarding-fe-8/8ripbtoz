@@ -6,18 +6,27 @@ export default function Header() {
   const navigate = useNavigate();
 
   return (
-    <HeaderWrapper>
-      <Container>
-        <Logo src='../../images/Logo_color.svg' onClick={() => navigate('/')} />
-        <ReservationLink onClick={() => navigate('/reservation')}>예약 내역</ReservationLink>
-      </Container>
-    </HeaderWrapper>
+    <Wrapper>
+      <HeaderWrapper>
+        <Container>
+          <Logo src='../../images/Logo_color.svg' onClick={() => navigate('/')} />
+          <ReservationLink onClick={() => navigate('/reservation')}>예약 내역</ReservationLink>
+        </Container>
+      </HeaderWrapper>
+    </Wrapper>
   );
 }
 
+const Wrapper = styled.div`
+  width: 100%;
+  position: sticky;
+  top: 0px;
+  background-color: white;
+  z-index: 2;
+`;
+
 const HeaderWrapper = styled.header`
   height: 84px;
-
   @media (max-width: 1024px) {
     margin: 0 30px;
   }

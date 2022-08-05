@@ -22,7 +22,9 @@ export default function Main() {
 
   return (
     <Wrapper>
-      <Search setPayload={setPayload} />
+      <SearchWrapper>
+        <Search setPayload={setPayload} />
+      </SearchWrapper>
       <CardContainer>
         {data?.pages.map((page) => (
           <React.Fragment key={page.pageParam}>
@@ -56,6 +58,18 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
+`;
+
+const SearchWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  top: 84px;
+  background-color: white;
+  z-index: 2;
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 20px;
 `;
 
 const CardContainer = styled.div`
