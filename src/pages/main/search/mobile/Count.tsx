@@ -25,7 +25,7 @@ export default function Count() {
       {isOpen && (
         <Popup top={-HEIGHT} left={0} close={close}>
           <FullSizePopup title='인원 및 객실' close={close}>
-            <p>인원 및 객실</p>
+            <GuestSelect adult={adult} child={child} onChange={onChange} close={close} />
           </FullSizePopup>
         </Popup>
       )}
