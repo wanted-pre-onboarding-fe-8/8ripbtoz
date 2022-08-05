@@ -1,5 +1,5 @@
 import React from 'react';
-import GridCard from './GridCard';
+import { GridCard, CardContainer } from './CardContainer';
 import styled, { keyframes } from 'styled-components';
 
 const skeletonRepeatCount = Array(10).fill(0);
@@ -16,11 +16,11 @@ function CardSkeleton() {
 
 function Skeleton() {
   return (
-    <>
+    <CardContainer>
       {skeletonRepeatCount.map((_, idx) => (
         <CardSkeleton key={idx} />
       ))}
-    </>
+    </CardContainer>
   );
 }
 
@@ -63,9 +63,9 @@ const Empty = styled.div`
   width: 100%;
   border-radius: 5px;
   background-color: #ededed;
-  background-image: linear-gradient(90deg, #ededed00, #f7f7f770 30%, #ededed00 60%);
+  background-image: linear-gradient(90deg, #ededed00, #f7f7f780 30%, #ededed00 60%);
   background-position: 0px;
   background-repeat: repeat-y;
-  animation: ${light} 2s infinite;
-  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: ${light} 0.5s infinite;
+  animation-timing-function: ease-out;
 `;

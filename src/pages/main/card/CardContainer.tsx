@@ -20,4 +20,18 @@ const GridCard = styled.div`
   }
 `;
 
-export default GridCard;
+const CardContainer = styled.div`
+  max-width: 976px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: auto;
+  grid-gap: 10px;
+  place-items: center center;
+  @media screen and (max-width: 976px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+export { GridCard, CardContainer };

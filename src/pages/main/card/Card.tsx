@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { IHotel, IHotelCard } from '../../../types';
+import { IHotelCard } from '../../../types';
 import { setReservationHotel } from '../../../queries/hotel';
 import { setHotelItem } from '../../../utils/storage';
-import GridCard from './GridCard';
+import { GridCard } from './CardContainer';
 
 function Card(props: IHotelCard) {
   const { hotelName, reservation, base, max, id, checkIn, checkOut, refetch } = props;
