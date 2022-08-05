@@ -6,6 +6,8 @@ import { getInfiniteScroll } from '../../queries/hotel';
 import { Card, Skeleton } from './card';
 import useScheduleValue from '../../hooks/useScheduleValue';
 import { useInView } from 'react-intersection-observer';
+import { HEIGHT } from '../../utils/constants/header';
+import useScrollDirection from '../../hooks/useScrollDirection';
 
 export default function Main() {
   const [payload, setPayload] = React.useState<ISearchPayload>({ hotelName: '', max: 0 });
@@ -20,9 +22,13 @@ export default function Main() {
     }
   }, [inView]);
 
+  const isDown = useScrollDirection();
+
   return (
     <Wrapper>
-      <Search setPayload={setPayload} />
+      <SearchWrapper isDown={isDown}>
+        <Search setPayload={setPayload} />
+      </SearchWrapper>
       <CardContainer>
         {data?.pages.map((page) => (
           <React.Fragment key={page.pageParam}>
@@ -56,6 +62,20 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
+`;
+
+const SearchWrapper = styled.div<{ isDown: boolean }>`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  top: ${`${HEIGHT}px`};
+  background-color: white;
+  z-index: 2;
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 20px;
+  transition: transform 1s;
+  transform: translateY(${({ isDown }) => (isDown ? `${-HEIGHT * 2}px` : '0px')});
 `;
 
 const CardContainer = styled.div`

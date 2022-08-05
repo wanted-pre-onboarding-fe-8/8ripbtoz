@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import useGuestCountState from '../../../../hooks/useGuestCountState';
 import FullSizePopup from '../../../../components/FullSizePopup';
 import { usePopup, Popup } from '../Popup';
+import { HEIGHT } from '../../../../utils/constants/header';
 import GuestSelect from '../../../../components/guestselect/GuestSelect';
 
 export default function Count() {
@@ -22,7 +23,7 @@ export default function Count() {
         </CountWrapper>
       </Contents>
       {isOpen && (
-        <Popup top={0} left={0} close={close}>
+        <Popup top={-HEIGHT} left={0} close={close}>
           <FullSizePopup title='인원 및 객실' close={close}>
             <p>인원 및 객실</p>
           </FullSizePopup>
