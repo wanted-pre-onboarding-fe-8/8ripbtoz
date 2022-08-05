@@ -78,6 +78,9 @@ const Container = styled.section`
   background-color: #fff;
   @media screen and (max-width: 480px) {
     position: static;
+
+    height: 90vh;
+    overflow: auto;
   }
 `;
 
@@ -96,8 +99,8 @@ const ButtonContainer = styled.div`
   background-color: #fff;
   @media screen and (max-width: 480px) {
     display: block;
-    width: 100%;
-    position: sticky;
+    width: 50%;
+    position: absolute;
     bottom: 14px;
   }
 `;
