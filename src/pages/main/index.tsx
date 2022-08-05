@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Search from './search';
 import { IHotel, ISearchPayload } from '../../types';
+import { HEIGHT } from '../../utils/constants/header';
 import { getInfiniteScroll } from '../../queries/hotel';
 import { useInView } from 'react-intersection-observer';
 import useScheduleValue from '../../hooks/useScheduleValue';
+import useScrollDirection from '../../hooks/useScrollDirection';
 import { Card, Skeleton } from './card';
 import { CardContainer } from './card/CardLayouts';
-import { HEIGHT } from '../../utils/constants/header';
-import useScrollDirection from '../../hooks/useScrollDirection';
 
 export default function Main() {
   const [payload, setPayload] = React.useState<ISearchPayload>({ hotelName: '', max: 0 });
@@ -38,7 +38,9 @@ export default function Main() {
 
       {data?.pages.map((page, idx) => (
         <React.Fragment key={idx}>
-          {checkEmptyResult(page.pageParam, page?.data.length) && <div>결과가 없습니다</div>}
+          {!isFetching && checkEmptyResult(page.pageParam, page?.data.length) && (
+            <div>검색 결과가 없습니다</div>
+          )}
           <CardContainer key={page?.pageParam + idx}>
             {page?.data.map((hotel: IHotel) => (
               <Card
