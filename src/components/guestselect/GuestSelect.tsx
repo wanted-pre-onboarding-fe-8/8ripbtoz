@@ -1,32 +1,65 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 import { GUEST } from '../../utils/constants/guest';
 import { IGuestCount } from '../../types';
-import { GuestWrapperTemplate } from './GuestTemplate';
+import { GuestSelectWrapperTemplate, GuestSelectButtonTemplate } from './GuestTemplate';
 import GuestSelectButton from './GuestSelectButton';
 
 interface IGuestSelectProps {
   adult: number;
   child: number;
   onChange: (guestCount: IGuestCount) => void;
+  close: () => void;
+}
+interface IGuestTempCount {
+  [key: typeof GUEST.ADULT | typeof GUEST.CHILD]: number;
+  adult: number;
+  child: number;
 }
 
-export default function GuestSelect({ adult, child, onChange }: IGuestSelectProps) {
+export default function GuestSelect({ adult, child, onChange, close }: IGuestSelectProps) {
+  const isDesktop = useMediaQuery({ minWidth: 1024 });
+  const [tempCount, setTemptCount] = useState({
+    adult: adult,
+    child: child,
+  });
+
   const { ADULT, CHILD, INCREASE, ADULT_KO } = GUEST;
   const adultDisabled = adult === 1;
   const childDisabled = child === 0;
 
+  const onTempChange = (guestCount: IGuestTempCount) => {
+    setTemptCount(guestCount);
+  };
+
   const handleChange = (button: string, item: string) => {
     const itemString = item === ADULT_KO ? ADULT : CHILD;
+    const value = button === INCREASE ? +1 : -1;
 
-    const state: IGuestCount = { adult, child };
-    state[itemString] += button === INCREASE ? +1 : -1;
-    onChange(state);
+    if (isDesktop) {
+      const state: IGuestCount = { adult, child };
+      state[itemString] += value;
+      onChange(state);
+    } else {
+      const tempState: IGuestTempCount = { adult, child };
+      tempState[itemString] += value;
+      onTempChange(tempState);
+    }
   };
+
+  const handleSelectClick = (tempCount: IGuestTempCount) => {
+    onChange({ adult: tempCount.adult, child: tempCount.child });
+    close();
+  };
+
+  console.log(tempCount);
+  useEffect(() => {
+    console.log('temptCount', tempCount);
+  }, []);
 
   return (
     <Wrapper>
-      <Header>인원 및 객실</Header>
       <GuestOptions>
         <ListHeader>객실 1</ListHeader>
         {GuestItems?.map((GuestItem) => (
@@ -39,11 +72,15 @@ export default function GuestSelect({ adult, child, onChange }: IGuestSelectProp
               item={GuestItem.key}
               disabled={GuestItem.key === ADULT_KO ? adultDisabled : childDisabled}
               count={GuestItem.key === ADULT_KO ? adult : child}
+              tempCount={GuestItem.key === ADULT_KO ? tempCount.adult : tempCount.child}
               handleChange={handleChange}
             />
           </ListMainItem>
         ))}
       </GuestOptions>
+      <ButtonContainer>
+        <Button onClick={() => handleSelectClick(tempCount)}>선택</Button>
+      </ButtonContainer>
     </Wrapper>
   );
 }
@@ -52,20 +89,8 @@ const GuestItems = [
   { key: '아이', value: '(0~17세)' },
 ];
 
-const Wrapper = styled(GuestWrapperTemplate)``;
+const Wrapper = styled(GuestSelectWrapperTemplate)``;
 
-const Header = styled.h2`
-  background-color: #fff;
-  border-bottom: 1px solid rgb(238, 238, 238);
-  display: none;
-  width: 100%;
-  color: rgb(34, 34, 34);
-  font-size: 5vw;
-  line-height: 5vw;
-  font-weight: 600;
-  text-align: center;
-  padding: 1rem;
-`;
 const GuestOptions = styled.ul`
   display: flex;
   flex-direction: column;
@@ -99,4 +124,20 @@ const ItemMainText = styled.p`
 `;
 const ItemSubText = styled.p`
   font-size: 0.8rem;
+`;
+
+const ButtonContainer = styled(GuestSelectButtonTemplate)``;
+
+const Button = styled.button`
+  background-color: rgb(255, 55, 92);
+  font-weight: 500;
+  color: rgb(255, 255, 255);
+  justify-content: center;
+  width: 100vw;
+  height: 10vw;
+  font-size: 5vw;
+  border-radius: 5px;
+  position: absolute;
+  cursor: pointer;
+  box-sizing: border-box;
 `;

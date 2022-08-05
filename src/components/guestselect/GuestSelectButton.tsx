@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { GUEST } from '../../utils/constants/guest';
 import { GuestButtonTemplate } from './GuestTemplate';
+import { useMediaQuery } from 'react-responsive';
 
 interface GuestSelectButtonProps {
   count: number;
   item: string;
   disabled: boolean;
+  tempCount: number;
   handleChange: (key: string, item: string) => void;
 }
 
 export default function GuestSelectButton({ ...props }: GuestSelectButtonProps) {
-  const { count, handleChange, item, disabled } = props;
+  const { count, handleChange, item, disabled, tempCount } = props;
+  const isDesktop = useMediaQuery({ minWidth: 1024 });
+  const guestCount = isDesktop ? count : tempCount;
   const { DECREASE } = GUEST;
 
   return (
@@ -29,7 +33,7 @@ export default function GuestSelectButton({ ...props }: GuestSelectButtonProps) 
               {button.value}
             </Button>
           </ButtonGroups>
-          {index === 1 ? <Counter style={{ display: 'none' }} /> : <Counter>{count}</Counter>}
+          {index === 1 ? <Counter style={{ display: 'none' }} /> : <Counter>{guestCount}</Counter>}
         </Container>
       ))}
     </>
