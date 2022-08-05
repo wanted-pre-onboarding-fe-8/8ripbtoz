@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import styled from 'styled-components';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
@@ -11,16 +11,13 @@ interface IFullSizePopup {
 
 export default function FullSizePopup({ title, close, children }: IFullSizePopup) {
   const isMobile = useMediaQuery({ maxWidth: 480 });
-  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (wrapperRef) {
-      return disableScroll(wrapperRef as React.MutableRefObject<HTMLDivElement>);
-    }
+    return disableScroll();
   }, []);
 
   return (
-    <Wrapper ref={wrapperRef}>
+    <Wrapper>
       <Header>
         <Title>{title}</Title>
         <CloseButtonWrapper onClick={close}>
@@ -32,9 +29,8 @@ export default function FullSizePopup({ title, close, children }: IFullSizePopup
   );
 }
 
-function disableScroll(ref: React.MutableRefObject<HTMLDivElement>) {
+function disableScroll() {
   document.body.style.cssText = 'overflow: hidden;';
-  ref.current.style.cssText = 'overflow: auto;';
   return () => {
     document.body.style.cssText = 'overflow: auto;';
   };
@@ -43,6 +39,7 @@ function disableScroll(ref: React.MutableRefObject<HTMLDivElement>) {
 const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
 `;
 
 const Header = styled.div`
