@@ -20,7 +20,7 @@ export default function Count() {
       </Contents>
       {isOpen && (
         <Popup top={60} left={0} close={close}>
-          <GuestSelect adult={adult} child={child} onChange={onChange} />
+          <GuestSelect adult={adult} child={child} onChange={onChange} close={close} />
         </Popup>
       )}
     </Wrapper>

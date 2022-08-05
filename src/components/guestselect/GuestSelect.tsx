@@ -1,105 +1,153 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 import { GUEST } from '../../utils/constants/guest';
 import { IGuestCount } from '../../types';
+import { GuestSelectWrapperTemplate, GuestSelectButtonTemplate } from './GuestTemplate';
 import GuestSelectButton from './GuestSelectButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
 
 interface IGuestSelectProps {
   adult: number;
   child: number;
   onChange: (guestCount: IGuestCount) => void;
+  close: () => void;
+}
+interface IGuestTempCount {
+  [key: typeof GUEST.ADULT | typeof GUEST.CHILD]: number;
+  adult: number;
+  child: number;
 }
 
-export default function GuestSelect({ adult, child, onChange }: IGuestSelectProps) {
+export default function GuestSelect({ adult, child, onChange, close }: IGuestSelectProps) {
+  const isDesktop = useMediaQuery({ minWidth: 1024 });
+  const [tempCount, setTemptCount] = useState({
+    adult: adult,
+    child: child,
+  });
+
   const { ADULT, CHILD, INCREASE, ADULT_KO } = GUEST;
   const adultDisabled = adult === 1;
   const childDisabled = child === 0;
+  const tempAdultDisabled = tempCount.adult === 1;
+  const tempChildDisabled = tempCount.child === 0;
+
+  const onTempChange = (guestCount: IGuestTempCount) => {
+    setTemptCount({ adult: guestCount.adult, child: guestCount.child });
+  };
 
   const handleChange = (button: string, item: string) => {
     const itemString = item === ADULT_KO ? ADULT : CHILD;
+    const value = button === INCREASE ? +1 : -1;
 
-    const state: IGuestCount = { adult, child };
-    state[itemString] += button === INCREASE ? +1 : -1;
-    onChange(state);
+    if (isDesktop) {
+      const state: IGuestCount = { adult, child };
+      state[itemString] += value;
+      onChange(state);
+    } else {
+      const tempState: IGuestTempCount = { adult: tempCount.adult, child: tempCount.child };
+      tempState[itemString] += value;
+      onTempChange(tempState);
+    }
   };
+
+  const handleSelectClick = (tempCount: IGuestTempCount) => {
+    onChange({ adult: tempCount.adult, child: tempCount.child });
+    close();
+  };
+
+  console.log(tempCount);
+  useEffect(() => {
+    console.log('temptCount', tempCount);
+  }, []);
 
   return (
     <Wrapper>
-      <ContainerHeader>인원 및 객실</ContainerHeader>
       <GuestOptions>
-        <ListHeader>
-          <ListHeaderText>객실 1</ListHeaderText>
-        </ListHeader>
+        <ListHeader>객실 1</ListHeader>
         {GuestItems?.map((GuestItem) => (
           <ListMainItem key={GuestItem.key}>
-            <ListItemText>
+            <ListItem>
               <ItemMainText>{GuestItem.key}</ItemMainText>
               <ItemSubText>{GuestItem.value}</ItemSubText>
-            </ListItemText>
+            </ListItem>
             <GuestSelectButton
               item={GuestItem.key}
-              disabled={GuestItem.key === ADULT_KO ? adultDisabled : childDisabled}
+              disabled={
+                isDesktop
+                  ? GuestItem.key === ADULT_KO
+                    ? adultDisabled
+                    : childDisabled
+                  : GuestItem.key === ADULT_KO
+                  ? tempAdultDisabled
+                  : tempChildDisabled
+              }
               count={GuestItem.key === ADULT_KO ? adult : child}
+              tempCount={GuestItem.key === ADULT_KO ? tempCount.adult : tempCount.child}
               handleChange={handleChange}
             />
           </ListMainItem>
         ))}
       </GuestOptions>
+      <ButtonContainer>
+        <Button onClick={() => handleSelectClick(tempCount)}>선택</Button>
+      </ButtonContainer>
     </Wrapper>
   );
 }
-
 const GuestItems = [
   { key: '성인', value: '' },
   { key: '아이', value: '(0~17세)' },
 ];
 
-const Wrapper = styled.section`
-  width: 320px;
-  @media screen and (max-width: 480px) {
-    width: 480px;
-  }
+const Wrapper = styled(GuestSelectWrapperTemplate)``;
+
+const GuestOptions = styled.ul`
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+`;
+const ListHeader = styled.li`
+  border-bottom: 1px solid rgb(238, 238, 238);
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 1rem;
 `;
 
-const ContainerHeader = styled.div`
-  display: none;
-  width: 100%;
+const ListMainItem = styled.li`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   color: rgb(34, 34, 34);
-  font-size: 5vw;
-  line-height: 5vw;
-  font-weight: 500;
-  text-align: center;
   padding: 1rem;
-  @media screen and (max-width: 480px) {
-    display: block;
-  }
+  font-size: 4.8vw;
 `;
-const GuestOptions = styled(List)`
-  box-shadow: rgb(0 0 0 / 20%) 0px 5px 20px 0px;
-  @media screen and (min-width: 480px) {
-  }
+const ListItem = styled.div`
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 `;
-const ListHeader = styled(ListSubheader)`
-  border-bottom: 1px solid rgb(238, 238, 238);
-`;
-const ListHeaderText = styled.h3`
-  font-size: 1.2rem;
-  font-weight: 700;
-`;
-const ListMainItem = styled(ListItem)`
-  color: rgb(34, 34, 34);
-  &:nth-last-child(1) {
-    border-bottom: 1px solid rgb(238, 238, 238);
-  }
-`;
+
 const ItemMainText = styled.p`
   font-size: 1rem;
+  font-weight: 500;
   color: rgb(34, 34, 34);
 `;
 const ItemSubText = styled.p`
   font-size: 0.8rem;
+`;
+
+const ButtonContainer = styled(GuestSelectButtonTemplate)``;
+
+const Button = styled.button`
+  background-color: rgb(255, 55, 92);
+  font-weight: 500;
+  color: rgb(255, 255, 255);
+  justify-content: center;
+  width: 100vw;
+  height: 10vw;
+  font-size: 5vw;
+  border-radius: 5px;
+  position: absolute;
+  cursor: pointer;
+  box-sizing: border-box;
 `;
