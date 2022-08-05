@@ -65,7 +65,7 @@ const Container = styled.section`
   z-index: 2;
   border-radius: 4px;
   box-shadow: rgb(0 0 0 / 20%) 0px 5px 20px 0px;
-  padding: 36px;
+  padding: 28px;
   background-color: #fff;
 `;
 
