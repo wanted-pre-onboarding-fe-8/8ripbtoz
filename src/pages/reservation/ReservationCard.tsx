@@ -48,6 +48,8 @@ const Card = styled.li`
   margin-bottom: 1rem;
   padding: 1rem 3rem;
   background: white;
+  box-shadow: #e4e4e4 2px 2px 4px 2px;
+  border-radius: 8px;
 
   @media (max-width: 600px) {
     padding: 2vw 3vw;
