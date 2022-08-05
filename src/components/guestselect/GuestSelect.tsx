@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 import { GUEST } from '../../utils/constants/guest';
@@ -20,7 +20,7 @@ interface IGuestTempCount {
 
 export default function GuestSelect({ adult, child, onChange, close }: IGuestSelectProps) {
   const isDesktop = useMediaQuery({ minWidth: 1024 });
-  const [tempCount, setTemptCount] = useState({
+  const [tempCount, setTempCount] = useState({
     adult: adult,
     child: child,
   });
@@ -32,7 +32,7 @@ export default function GuestSelect({ adult, child, onChange, close }: IGuestSel
   const tempChildDisabled = tempCount.child === 0;
 
   const onTempChange = (guestCount: IGuestTempCount) => {
-    setTemptCount({ adult: guestCount.adult, child: guestCount.child });
+    setTempCount({ adult: guestCount.adult, child: guestCount.child });
   };
 
   const handleChange = (button: string, item: string) => {
