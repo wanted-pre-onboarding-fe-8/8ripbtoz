@@ -1,12 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useScrollDirection from '../hooks/useScrollDirection';
 
 export default function Header() {
   const navigate = useNavigate();
+  const isDown = useScrollDirection();
 
   return (
-    <Wrapper>
+    <Wrapper isDown={isDown}>
       <HeaderWrapper>
         <Container>
           <Logo src='../../images/Logo_color.svg' onClick={() => navigate('/')} />
@@ -17,16 +19,20 @@ export default function Header() {
   );
 }
 
-const Wrapper = styled.div`
+const HEADER_HEIGHT = 84;
+
+const Wrapper = styled.div<{ isDown: boolean }>`
   width: 100%;
   position: sticky;
   top: 0px;
   background-color: white;
   z-index: 2;
+  transition: transform 1s;
+  transform: translateY(${({ isDown }) => (isDown ? `${-HEADER_HEIGHT}px` : '0px')});
 `;
 
 const HeaderWrapper = styled.header`
-  height: 84px;
+  height: ${`${HEADER_HEIGHT}px`};
   @media (max-width: 1024px) {
     margin: 0 30px;
   }
