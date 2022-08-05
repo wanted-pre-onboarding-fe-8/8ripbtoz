@@ -35,7 +35,9 @@ function Day({ day, checkInAndOut: { checkIn, checkOut }, onClickDate }: DayProp
         <CheckDay>{dayText}</CheckDay>
       </CheckInContainer>
     ) : (
-      <CheckDay>{dayText}</CheckDay>
+      <Container>
+        <CheckDay>{dayText}</CheckDay>
+      </Container>
     );
   }
 
@@ -76,17 +78,22 @@ const Container = styled.div`
   }
 `;
 
-const CheckDay = styled(Container)`
+const CheckDay = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #ff375c;
   color: #fff;
   border-radius: 100%;
 `;
 
-const CheckInContainer = styled.div`
+const CheckInContainer = styled(Container)`
   background-image: linear-gradient(to right, rgb(255, 255, 255) 50%, rgba(255, 55, 92, 0.2) 50%);
 `;
 
-const CheckOutContainer = styled.div`
+const CheckOutContainer = styled(Container)`
   background-image: linear-gradient(to right, rgba(255, 55, 92, 0.2) 50%, rgb(255, 255, 255) 50%);
 `;
 
