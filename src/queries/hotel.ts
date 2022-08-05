@@ -19,6 +19,7 @@ export function getInfiniteScroll(payload: ISearchPayload) {
     ['hotels', payload.hotelName, payload.max],
     async ({ pageParam = 1 }) => {
       const res = await httpClient.get<IHotels>(`/hotels${query}` + pageParam);
+      if (res.length === 0) return { data: res, pageParam: undefined };
       return { data: res, pageParam: pageParam + 1 };
     },
     {
