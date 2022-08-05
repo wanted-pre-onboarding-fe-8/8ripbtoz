@@ -20,7 +20,7 @@ export default function Main() {
     if (inView) {
       fetchNextPage();
     }
-  }, [inView]);
+  }, [inView, isFetching]);
 
   const isDown = useScrollDirection();
 
