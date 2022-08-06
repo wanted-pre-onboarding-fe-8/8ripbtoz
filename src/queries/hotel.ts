@@ -24,6 +24,7 @@ export function getInfiniteScroll(payload: ISearchPayload) {
     },
     {
       getNextPageParam: (lastPage) => lastPage.pageParam ?? undefined,
+      refetchOnWindowFocus: false,
     },
   );
 }
