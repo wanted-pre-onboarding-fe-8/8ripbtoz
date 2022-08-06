@@ -1,5 +1,5 @@
 import React from 'react';
-import { GridCard, CardContainer } from './CardContainer';
+import { GridCard, CardContainer } from './CardLayouts';
 import styled, { keyframes } from 'styled-components';
 
 const skeletonRepeatCount = Array(10).fill(0);
