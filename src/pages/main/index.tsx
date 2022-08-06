@@ -18,6 +18,12 @@ export default function Main() {
     getInfiniteScroll(payload);
 
   useEffect(() => {
+    window.onbeforeunload = function pushRefresh() {
+      window.scrollTo(0, 0);
+    };
+  }, []);
+
+  useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
