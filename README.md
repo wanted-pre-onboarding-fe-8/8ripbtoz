@@ -263,3 +263,14 @@ npm start
 
   - 예약 내역 확인페이지
 ![웹예약](https://velog.velcdn.com/images/brill_be/post/363b9157-d4cf-4cf1-91ba-bc553773a561/image.png)
+
+
+- 모바일
+    - 데이트피커와 투숙객 입력 폼
+    
+    ![image](https://user-images.githubusercontent.com/49019236/183225829-014e67c3-9a1e-4f22-8f15-b784114df479.png)![image](https://user-images.githubusercontent.com/49019236/183225842-7f48dc54-fbca-4283-ada3-71b97da8d81d.png)
+    
+    
+    - 메인페이지와 예약 내역 확인 페이지
+   
+    ![image](https://user-images.githubusercontent.com/49019236/183225866-4cabb689-7967-4961-8d5c-ea5ed4496d13.png)![image](https://user-images.githubusercontent.com/49019236/183225849-1ef66dc7-5034-455a-b53c-0bc1494a0cd6.png)
